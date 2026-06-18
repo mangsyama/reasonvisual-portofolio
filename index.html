@@ -79,61 +79,47 @@
 
     /* ── Nav ────────────────────────────────── */
     #navbar { transition: background-color 0.35s ease, box-shadow 0.35s ease; }
-    #navbar.scrolled {
+    #navbar.scrolled, #navbar.mobile-open {
       background-color: rgba(253, 252, 250, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
-    .dark #navbar.scrolled {
+    .dark #navbar.scrolled, .dark #navbar.mobile-open {
       background-color: rgba(20, 20, 20, 0.92);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     /* Navbar styles when at the top (transparent over dark hero image) */
-    #navbar:not(.scrolled) {
+    #navbar:not(.scrolled):not(.mobile-open) {
       background-color: transparent;
       box-shadow: none;
     }
-    #navbar:not(.scrolled) a.font-serif {
+    #navbar:not(.scrolled):not(.mobile-open) a.font-serif {
       color: #ffffff !important;
     }
-    #navbar:not(.scrolled) .nav-link {
+    #navbar:not(.scrolled):not(.mobile-open) .nav-link {
       color: rgba(255, 255, 255, 0.75) !important;
     }
-    #navbar:not(.scrolled) .nav-link:hover,
-    #navbar:not(.scrolled) .nav-link.active {
+    #navbar:not(.scrolled):not(.mobile-open) .nav-link:hover,
+    #navbar:not(.scrolled):not(.mobile-open) .nav-link.active {
       color: #ffffff !important;
     }
-    #navbar:not(.scrolled) .nav-btn {
+    #navbar:not(.scrolled):not(.mobile-open) .nav-btn {
       background-color: #ffffff !important;
       color: #141414 !important;
     }
-    #navbar:not(.scrolled) #mobile-menu-btn span {
+    #navbar:not(.scrolled):not(.mobile-open) #mobile-menu-btn span {
       background-color: #ffffff !important;
     }
-    #navbar:not(.scrolled) .theme-toggle {
+    #navbar:not(.scrolled):not(.mobile-open) .theme-toggle {
       background-color: rgba(255, 255, 255, 0.15) !important;
     }
-    #navbar:not(.scrolled) #lang-toggle {
+    #navbar:not(.scrolled):not(.mobile-open) #lang-toggle {
       background-color: rgba(255, 255, 255, 0.15) !important;
       color: #ffffff !important;
     }
-    #navbar:not(.scrolled) #mobile-menu {
-      background-color: transparent !important;
-      box-shadow: none !important;
-      border-bottom: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-    #navbar:not(.scrolled) .mobile-nav-link {
-      color: rgba(255, 255, 255, 0.75) !important;
-    }
-    #navbar:not(.scrolled) .mobile-nav-link:hover,
-    #navbar:not(.scrolled) .mobile-nav-link.active {
-      color: #ffffff !important;
-      background-color: rgba(255, 255, 255, 0.1) !important;
-    }
+
 
     .nav-link { position: relative; }
     .nav-link::after {
@@ -155,14 +141,14 @@
       right: 0;
       max-height: 0; opacity: 0; overflow: hidden;
       transition: max-height 0.35s ease, opacity 0.25s ease;
-      background-color: rgba(253, 252, 250, 0.96);
+      background-color: rgba(253, 252, 250, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
     .dark #mobile-menu {
-      background-color: rgba(20, 20, 20, 0.96);
+      background-color: rgba(20, 20, 20, 0.92);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -170,6 +156,10 @@
     #mobile-menu-btn span {
       display: block; width: 18px; height: 1.5px;
       border-radius: 2px; transition: all 0.3s ease;
+    }
+    .mobile-nav-link.active {
+      color: #B8784E !important;
+      font-weight: 600;
     }
 
     /* ── Reveal ─────────────────────────────── */
@@ -292,7 +282,7 @@
   <!-- ═══════════════════════════════════════
        HERO
   ═══════════════════════════════════════ -->
-  <section id="home" class="hero-cover flex items-end">
+  <section id="home" class="hero-cover flex items-center md:items-end">
     <div id="hero-bg" class="absolute inset-0">
       <img src="assets/images/hero.jpg" alt="Wedding videography documentation" class="w-full h-full object-cover" />
     </div>

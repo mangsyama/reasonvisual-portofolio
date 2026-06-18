@@ -254,6 +254,7 @@
     if (!mobileMenuBtn || !mobileMenu) return;
     mobileMenuBtn.addEventListener('click', () => {
       const open = mobileMenu.classList.toggle('menu-open');
+      if (navbar) navbar.classList.toggle('mobile-open', open);
       mobileMenuBtn.setAttribute('aria-expanded', String(open));
       const bars = mobileMenuBtn.querySelectorAll('span');
       if (open) {
@@ -267,6 +268,7 @@
     $$('.mobile-nav-link').forEach((l) => {
       l.addEventListener('click', () => {
         mobileMenu.classList.remove('menu-open');
+        if (navbar) navbar.classList.remove('mobile-open');
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
         mobileMenuBtn.querySelectorAll('span').forEach((b) => {
           b.style.transform = ''; b.style.opacity = '';
