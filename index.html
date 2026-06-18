@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReasonVisual — Documentation Services</title>
+  <meta name="description" content="ReasonVisual — Jasa dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company Profile, Wisuda & dokumentasi lainnya. Foto, video, dan drone shoot berkualitas tinggi." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;500;600;700;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['DM Sans', 'system-ui', 'sans-serif'],
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+          },
+          colors: {
+            sand: {
+              50: '#FDFCFA',
+              100: '#F8F6F1',
+              200: '#F0ECE3',
+              300: '#E3DDD1',
+              400: '#C4BAA6',
+              500: '#A69B85',
+              600: '#887D67',
+              700: '#6B614D',
+              800: '#4A4235',
+              900: '#2C2720',
+            },
+            accent: {
+              DEFAULT: '#B8784E',
+              light: '#D4956B',
+              dark: '#965F3A',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* ── Scrollbar ─────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #C4BAA6; border-radius: 99px; }
+    .dark ::-webkit-scrollbar-thumb { background: #4A4235; }
+
+    /* ── Hero cover ────────────────────────── */
+    .hero-cover {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    .hero-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.15) 100%),
+                  linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 40%, rgba(0,0,0,0.6) 100%);
+      z-index: 1;
+    }
+
+    /* ── Nav ────────────────────────────────── */
+    #navbar { transition: background-color 0.35s ease, box-shadow 0.35s ease; }
+    #navbar.scrolled {
+      background-color: rgba(253, 252, 250, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    .dark #navbar.scrolled {
+      background-color: rgba(20, 20, 20, 0.92);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Navbar styles when at the top (transparent over dark hero image) */
+    #navbar:not(.scrolled) {
+      background-color: transparent;
+      box-shadow: none;
+    }
+    #navbar:not(.scrolled) a.font-serif {
+      color: #ffffff !important;
+    }
+    #navbar:not(.scrolled) .nav-link {
+      color: rgba(255, 255, 255, 0.75) !important;
+    }
+    #navbar:not(.scrolled) .nav-link:hover,
+    #navbar:not(.scrolled) .nav-link.active {
+      color: #ffffff !important;
+    }
+    #navbar:not(.scrolled) .nav-btn {
+      background-color: #ffffff !important;
+      color: #141414 !important;
+    }
+    #navbar:not(.scrolled) #mobile-menu-btn span {
+      background-color: #ffffff !important;
+    }
+    #navbar:not(.scrolled) .theme-toggle {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+    #navbar:not(.scrolled) #lang-toggle {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+      color: #ffffff !important;
+    }
+    #navbar:not(.scrolled) #mobile-menu {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border-bottom: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    #navbar:not(.scrolled) .mobile-nav-link {
+      color: rgba(255, 255, 255, 0.75) !important;
+    }
+    #navbar:not(.scrolled) .mobile-nav-link:hover,
+    #navbar:not(.scrolled) .mobile-nav-link.active {
+      color: #ffffff !important;
+      background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 1.5px;
+      background: currentColor;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+    /* ── Mobile menu ───────────────────────── */
+    #mobile-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 0; opacity: 0; overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      background-color: rgba(253, 252, 250, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .dark #mobile-menu {
+      background-color: rgba(20, 20, 20, 0.96);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    #mobile-menu.menu-open { max-height: 360px; opacity: 1; }
+    #mobile-menu-btn span {
+      display: block; width: 18px; height: 1.5px;
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+
+    /* ── Reveal ─────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.25,1,0.5,1), transform 0.7s cubic-bezier(0.25,1,0.5,1);
+    }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* ── Skeleton ───────────────────────────── */
+    .skeleton { position: relative; overflow: hidden; }
+    .skeleton::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2s ease-in-out infinite;
+    }
+    .dark .skeleton::after {
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+      background-size: 200% 100%;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ── Theme toggle ──────────────────────── */
+    .theme-toggle {
+      position: relative; width: 48px; height: 26px;
+      border-radius: 99px; cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .theme-toggle .toggle-dot {
+      position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; border-radius: 50%;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .dark .theme-toggle .toggle-dot { transform: translateX(22px); }
+
+    /* ── Gallery card ──────────────────────── */
+    .gallery-card {
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    .dark .gallery-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    /* ── Price card ─────────────────────────── */
+    .price-card {
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .price-card:hover {
+      transform: translateY(-6px);
+    }
+    .price-card-featured {
+      border-color: #B8784E !important;
+      box-shadow: 0 8px 40px rgba(184, 120, 78, 0.12);
+    }
+    .dark .price-card-featured {
+      box-shadow: 0 8px 40px rgba(184, 120, 78, 0.08);
+    }
+    .price-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+    }
+    .dark .price-card:hover {
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+
+<body class="bg-sand-50 text-sand-900 dark:bg-[#141414] dark:text-sand-200 antialiased">
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div class="flex items-center justify-between h-16 lg:h-[72px]">
+        <a href="#home" class="font-serif text-lg sm:text-xl font-semibold tracking-tight text-sand-900 dark:text-sand-100">
+          Reason<span class="text-accent">Visual</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home" data-i18n="nav_home" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Home</a>
+          <a href="#about" data-i18n="nav_about" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">About</a>
+          <a href="#pricelist" data-i18n="nav_pricelist" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Price List</a>
+          <a href="#gallery" data-i18n="nav_gallery" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Gallery</a>
+          <a href="#contact" data-i18n="nav_contact" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Contact</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="lang-toggle" class="h-[26px] px-3 rounded-full bg-sand-200 dark:bg-sand-800 text-sand-900 dark:text-sand-100 flex items-center justify-center gap-1.5 hover:opacity-80 transition-opacity font-semibold text-xs tracking-wider" aria-label="Switch Language">
+            <i class="fa-solid fa-language text-sm"></i><span>EN</span>
+          </button>
+          <button id="theme-toggle" class="theme-toggle bg-sand-200 dark:bg-sand-800" aria-label="Toggle dark mode">
+            <div class="toggle-dot bg-white dark:bg-sand-300 flex items-center justify-center">
+              <svg class="w-3 h-3 text-amber-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+              <svg class="w-3 h-3 text-sand-800 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+            </div>
+          </button>
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Menu" aria-expanded="false">
+            <span class="bg-sand-700 dark:bg-sand-300"></span>
+            <span class="bg-sand-700 dark:bg-sand-300"></span>
+            <span class="bg-sand-700 dark:bg-sand-300"></span>
+          </button>
+        </div>
+      </div>
+      <div id="mobile-menu">
+        <div class="px-5 py-4 pb-5 space-y-2 text-center">
+          <a href="#home" data-i18n="nav_home" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Home</a>
+          <a href="#about" data-i18n="nav_about" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">About</a>
+          <a href="#pricelist" data-i18n="nav_pricelist" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Price List</a>
+          <a href="#gallery" data-i18n="nav_gallery" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Gallery</a>
+          <a href="#contact" data-i18n="nav_contact" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section id="home" class="hero-cover flex items-end">
+    <div id="hero-bg" class="absolute inset-0">
+      <img src="assets/images/hero.jpg" alt="Wedding videography documentation" class="w-full h-full object-cover" />
+    </div>
+    <div class="relative z-10 w-full pb-16 sm:pb-20 lg:pb-24 pt-32">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <div class="max-w-2xl text-center md:text-left w-full">
+            <p data-i18n="hero_tagline" class="text-accent text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-6">
+              Documentation Services
+            </p>
+            <h1 data-i18n="hero_title" class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-[1.15] mb-12 tracking-tight">
+              Capture Your Moments
+            </h1>
+            <div class="flex flex-wrap justify-center md:justify-start gap-2 max-w-xl mx-auto md:mx-0">
+              <span data-i18n="tag_wedding" class="text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-sand-100/90 px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">Wedding</span>
+              <span data-i18n="tag_event" class="text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-sand-100/90 px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">Event</span>
+              <span data-i18n="tag_travel" class="text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-sand-100/90 px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">Travel</span>
+              <span data-i18n="tag_company" class="text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-sand-100/90 px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">Company</span>
+              <span data-i18n="tag_more" class="text-[9px] sm:text-[11px] font-semibold tracking-wider uppercase text-sand-100/90 px-2 py-1 sm:px-3 sm:py-1.5 bg-white/10 border border-white/15 rounded-full backdrop-blur-md">&amp; More</span>
+            </div>
+          </div>
+          <div class="flex flex-wrap justify-center md:justify-start gap-3 w-full md:w-auto flex-shrink-0">
+            <a href="#pricelist" class="inline-flex items-center gap-2 px-7 py-3 bg-white text-sand-900 text-sm font-semibold rounded-full hover:bg-sand-100 transition-colors">
+              <span data-i18n="btn_prices">View Prices</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </a>
+            <a href="#gallery" data-i18n="btn_gallery" class="inline-flex items-center gap-2 px-7 py-3 bg-white/15 backdrop-blur-sm text-white text-sm font-semibold rounded-full border border-white/25 hover:bg-white/25 transition-colors">
+              View Gallery
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-1.5">
+      <div class="w-[1px] h-8 bg-gradient-to-b from-transparent to-white/40"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       ABOUT
+  ═══════════════════════════════════════ -->
+  <section id="about" class="py-14 sm:py-20 lg:py-24 scroll-mt-14">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div class="reveal mb-10 lg:mb-14">
+        <h2 data-i18n="about_title" class="inline-block pb-3 border-b-2 border-accent font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight text-sand-900 dark:text-sand-100">
+          About Us
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div class="reveal" style="transition-delay:0.1s">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
+            <img src="assets/images/about.jpg" alt="Photographer at work" class="w-full h-full object-cover" />
+          </div>
+        </div>
+        <div>
+          <div class="reveal" style="transition-delay:0.15s">
+            <p data-i18n="about_p1" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-6">
+              ReasonVisual is a professional documentation team providing photo, video, and drone shoot services for various needs — ranging from wedding, pre-wedding, event, travel, company profile, graduation, to other custom documentation needs according to your requests.
+            </p>
+            <p data-i18n="about_p2" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-10">
+              We believe that every moment has a story worth capturing. With modern equipment and a creative eye, we turn ordinary moments into memorable visual works that can be cherished forever.
+            </p>
+          </div>
+          <div class="reveal grid grid-cols-3 gap-6 mb-10" style="transition-delay:0.2s">
+            <div>
+              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">50+</div>
+              <div data-i18n="stats_projects" class="text-xs text-sand-500 mt-1">Completed Projects</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">30+</div>
+              <div data-i18n="stats_clients" class="text-xs text-sand-500 mt-1">Satisfied Clients</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">5+</div>
+              <div data-i18n="stats_experience" class="text-xs text-sand-500 mt-1">Years of Experience</div>
+            </div>
+          </div>
+          <div class="reveal flex flex-wrap gap-2" style="transition-delay:0.25s">
+            <span data-i18n="tag_wedding" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Wedding</span>
+            <span data-i18n="tag_prewedding" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Pre-Wedding</span>
+            <span data-i18n="tag_event" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Event</span>
+            <span data-i18n="tag_travel" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Travel</span>
+            <span data-i18n="tag_company" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Company</span>
+            <span data-i18n="tag_graduation" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Graduation</span>
+            <span data-i18n="tag_drone" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Drone</span>
+            <span data-i18n="tag_cinematic" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Cinematic</span>
+            <span data-i18n="tag_others" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Others</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       PRICE LIST
+  ═══════════════════════════════════════ -->
+  <section id="pricelist" class="py-14 sm:py-20 lg:py-24 bg-sand-100 dark:bg-[#1A1A1A] scroll-mt-14">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+
+      <div class="reveal text-center mb-6">
+        <p data-i18n="price_eyebrow" class="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">Package Price List</p>
+        <h2 data-i18n="price_title" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight mb-4">Choose Documentation Package</h2>
+        <p data-i18n="price_subtitle" class="text-sand-500 text-sm max-w-xl mx-auto">Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company, Graduation & other documentations.</p>
+      </div>
+
+      <!-- Service tags -->
+      <div class="reveal flex flex-wrap justify-center gap-2 mb-14">
+        <span data-i18n="tag_wedding" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Wedding</span>
+        <span data-i18n="tag_prewedding" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Pre-Wedding</span>
+        <span data-i18n="tag_event" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Event</span>
+        <span data-i18n="tag_travel" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Travel</span>
+        <span data-i18n="tag_company" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Company</span>
+        <span data-i18n="tag_graduation" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Graduation</span>
+        <span data-i18n="tag_others" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Others</span>
+      </div>
+
+      <!-- Price Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+
+        <!-- SILVER -->
+        <div class="reveal price-card order-3 md:order-1 rounded-2xl border border-sand-200 dark:border-sand-800 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col" style="transition-delay:0.05s">
+          <div class="mb-6">
+            <span class="inline-block px-3 py-1 bg-sand-200 dark:bg-sand-800 text-sand-600 dark:text-sand-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Silver</span>
+            <p data-i18n="price_silver_desc" class="text-sand-500 text-sm leading-relaxed">Budget-friendly option for specific documentation needs.</p>
+          </div>
+
+          <div class="space-y-4 mb-8 flex-1">
+            <!-- Option 1 -->
+            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60">
+              <div class="flex items-baseline justify-between mb-2">
+                <span data-i18n="price_drone_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Drone Video Only</span>
+                <span data-i18n="price_no_edit" class="text-xs text-sand-400">No Edit</span>
+              </div>
+              <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
+                Rp 999<span class="text-base text-sand-400 font-sans">.000</span>
+              </div>
+            </div>
+            <!-- Option 2 -->
+            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60">
+              <div class="mb-2">
+                <span data-i18n="price_photo_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Photo Documentation Only</span>
+              </div>
+              <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
+                Rp 1.499<span class="text-base text-sand-400 font-sans">.000</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#contact" data-i18n="price_btn_silver" class="block text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+            Choose Silver
+          </a>
+        </div>
+
+        <!-- PREMIUM (Featured) -->
+        <div class="reveal price-card price-card-featured order-1 md:order-2 rounded-2xl border-2 border-accent bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col relative" style="transition-delay:0.1s">
+          <!-- Badge -->
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span data-i18n="price_best_value" class="px-4 py-1 bg-accent text-white text-[10px] font-bold tracking-[0.15em] uppercase rounded-full shadow-lg shadow-accent/20">Best Value</span>
+          </div>
+
+          <div class="mb-6 mt-2">
+            <span class="inline-block px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Premium</span>
+            <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
+              Rp 3.499<span class="text-xl text-sand-400 font-sans">.000</span>
+            </div>
+            <p data-i18n="price_best_complete" class="text-sand-500 text-sm">Best complete package</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_photo_video" class="text-sm text-sand-700 dark:text-sand-300">Photo & Video Documentation</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_drone" class="text-sm text-sand-700 dark:text-sand-300">Drone Shoot</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_all_files" class="text-sm text-sand-700 dark:text-sand-300">All Edited & Raw Files</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_flashdisk" class="text-sm text-sand-700 dark:text-sand-300">Flash Drive</span>
+            </li>
+          </ul>
+
+          <a href="#contact" data-i18n="price_btn_premium" class="block text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-sm font-semibold rounded-full transition-colors shadow-lg shadow-accent/20">
+            Choose Premium
+          </a>
+        </div>
+
+        <!-- GOLD -->
+        <div class="reveal price-card order-2 md:order-3 rounded-2xl border border-sand-200 dark:border-sand-800 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col" style="transition-delay:0.15s">
+          <div class="mb-6">
+            <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Gold</span>
+            <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
+              Rp 2.499<span class="text-xl text-sand-400 font-sans">.000</span>
+            </div>
+            <p data-i18n="price_video_complete" class="text-sand-500 text-sm">Complete video documentation</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 flex-1">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_video_doc" class="text-sm text-sand-700 dark:text-sand-300">Video Documentation</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_drone" class="text-sm text-sand-700 dark:text-sand-300">Drone Shoot</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span data-i18n="price_feature_all_edited" class="text-sm text-sand-700 dark:text-sand-300">All Edited Files</span>
+            </li>
+          </ul>
+
+          <a href="#contact" data-i18n="price_btn_gold" class="block text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+            Choose Gold
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       GALLERY
+  ═══════════════════════════════════════ -->
+  <section id="gallery" class="py-14 sm:py-20 lg:py-24 scroll-mt-14">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+        <div>
+          <p data-i18n="gallery_eyebrow" class="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">Portfolio</p>
+          <h2 data-i18n="gallery_title" class="inline-block pb-3 border-b-2 border-accent font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight">Gallery</h2>
+        </div>
+        <p data-i18n="gallery_desc" class="text-sand-500 text-sm max-w-sm">Our documentation collection from various wedding, event, travel, and corporate projects.</p>
+      </div>
+
+      <!-- Gallery Filter Tabs -->
+      <div class="reveal flex flex-wrap gap-2.5 mb-10" style="transition-delay: 0.1s">
+        <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-accent text-white shadow-md shadow-accent/15" data-filter="all" data-i18n="filter_all">All</button>
+        <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-filter="gambar" data-i18n="filter_photo">Photos</button>
+        <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-filter="video" data-i18n="filter_video">Videos</button>
+      </div>
+
+      <div id="gallery-loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"></div>
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       CONTACT
+  ═══════════════════════════════════════ -->
+  <section id="contact" class="py-14 sm:py-20 lg:py-24 bg-sand-100 dark:bg-[#1A1A1A] scroll-mt-14">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+      <div class="max-w-2xl mx-auto text-center">
+
+        <div class="reveal">
+          <p data-i18n="contact_eyebrow" class="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">Contact</p>
+          <h2 data-i18n="contact_title" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight mb-4">Book Now</h2>
+          <p data-i18n="contact_desc" class="text-sand-500 text-sm mb-12">Contact us for consultation and booking your documentation schedule.</p>
+        </div>
+
+        <!-- WhatsApp CTA -->
+        <div class="reveal mb-10" style="transition-delay:0.1s">
+          <a id="cta-whatsapp" href="#" target="_blank" rel="noopener noreferrer"
+             class="group inline-flex items-center gap-4 px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/20 hover:-translate-y-0.5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-i18n="contact_btn_wa">Contact via WhatsApp</span>
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+
+        <!-- Socials -->
+        <div class="reveal flex flex-wrap items-center justify-center gap-4" style="transition-delay:0.15s">
+          <a href="https://instagram.com/mingboyy" target="_blank" rel="noopener noreferrer"
+             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
+            <svg class="w-5 h-5 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            <div class="text-left">
+              <span class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
+              <span class="block text-[11px] text-sand-400">@mingboyy</span>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/reasonvisual/" target="_blank" rel="noopener noreferrer"
+             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
+            <svg class="w-5 h-5 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            <div class="text-left">
+              <span class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
+              <span class="block text-[11px] text-sand-400">@reasonvisual</span>
+            </div>
+          </a>
+          <a href="tel:+6281805230948"
+             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
+            <i class="fa-solid fa-phone text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 text-[17px] transition-colors w-5 text-center"></i>
+            <div class="text-left">
+              <span data-i18n="contact_phone_label" class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Phone</span>
+              <span class="block text-[11px] text-sand-400">0818-0523-0948</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="border-t border-sand-200 dark:border-sand-800 py-8">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-sand-500">
+      <span>&copy; <span id="current-year">2026</span> ReasonVisual. <span data-i18n="footer_rights">All rights reserved.</span></span>
+      <div class="flex items-center gap-4">
+        <a href="#home" data-i18n="nav_home" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Home</a>
+        <a href="#about" data-i18n="nav_about" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">About</a>
+        <a href="#pricelist" data-i18n="nav_pricelist" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Price List</a>
+        <a href="#gallery" data-i18n="nav_gallery" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Gallery</a>
+        <a href="#contact" data-i18n="nav_contact" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
