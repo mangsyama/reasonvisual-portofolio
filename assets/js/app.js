@@ -14,6 +14,29 @@
     'Halo! Saya tertarik dengan jasa dokumentasi Anda. Bisa konsultasi lebih lanjut?'
   );
 
+  const PACKAGES = {
+    silver_drone: {
+      name_en: "Silver - Drone Video Only",
+      name_id: "Silver - Video Drone Only",
+      price: "Rp 999.000"
+    },
+    silver_photo: {
+      name_en: "Silver - Photo Documentation Only",
+      name_id: "Silver - Foto Dokumentasi Only",
+      price: "Rp 1.499.000"
+    },
+    premium: {
+      name_en: "Premium Package",
+      name_id: "Premium Package",
+      price: "Rp 2.999.000"
+    },
+    gold: {
+      name_en: "Gold Package",
+      name_id: "Gold Package",
+      price: "Rp 1.999.000"
+    }
+  };
+
   // ─── TRANSLATIONS ─────────────────────────────────────────────
   const TRANSLATIONS = {
     en: {
@@ -50,6 +73,8 @@
       price_no_edit: "No Edit",
       price_photo_only: "Photo Documentation Only",
       price_btn_silver: "Choose Silver",
+      price_btn_silver_drone: "Choose Drone Only",
+      price_btn_silver_photo: "Choose Photo Only",
       price_best_value: "Best Value",
       price_best_complete: "Best complete package",
       price_feature_photo_video: "Photo & Video Documentation",
@@ -72,7 +97,19 @@
       contact_desc: "Contact us for consultation and booking your documentation schedule.",
       contact_btn_wa: "Contact via WhatsApp",
       contact_phone_label: "Phone",
-      footer_rights: "All rights reserved."
+      footer_rights: "All rights reserved.",
+      modal_title: "Book Package",
+      modal_subtitle: "Please fill in the details below to prepare your WhatsApp message.",
+      modal_package_selected: "Selected Package",
+      modal_price: "Price",
+      modal_label_name: "Your Name",
+      modal_placeholder_name: "e.g., Alex Johnson",
+      modal_label_date: "Event Date",
+      modal_label_location: "Event Location",
+      modal_placeholder_location: "e.g., Bali, Indonesia",
+      modal_btn_send: "Send via WhatsApp",
+      modal_btn_cancel: "Cancel",
+      modal_label_chat_lang: "Chat Language"
     },
     id: {
       nav_home: "Beranda",
@@ -108,6 +145,8 @@
       price_no_edit: "No Edit",
       price_photo_only: "Foto Documentation Only",
       price_btn_silver: "Pilih Silver",
+      price_btn_silver_drone: "Pilih Video Drone Only",
+      price_btn_silver_photo: "Pilih Foto Only",
       price_best_value: "Best Value",
       price_best_complete: "Paket lengkap terbaik",
       price_feature_photo_video: "Foto & Video Documentation",
@@ -130,7 +169,19 @@
       contact_desc: "Hubungi kami untuk konsultasi dan booking jadwal dokumentasi Anda.",
       contact_btn_wa: "Hubungi via WhatsApp",
       contact_phone_label: "Telepon",
-      footer_rights: "Hak Cipta Dilindungi."
+      footer_rights: "Hak Cipta Dilindungi.",
+      modal_title: "Booking Paket",
+      modal_subtitle: "Silakan isi detail di bawah untuk menyiapkan pesan WhatsApp Anda.",
+      modal_package_selected: "Paket Terpilih",
+      modal_price: "Harga",
+      modal_label_name: "Nama Anda",
+      modal_placeholder_name: "contoh: Budi Santoso",
+      modal_label_date: "Tanggal Acara",
+      modal_label_location: "Lokasi Acara",
+      modal_placeholder_location: "contoh: Bali, Indonesia",
+      modal_btn_send: "Kirim via WhatsApp",
+      modal_btn_cancel: "Batal",
+      modal_label_chat_lang: "Bahasa Chat"
     }
   };
 
@@ -149,6 +200,15 @@
   const langToggle = $('#lang-toggle');
   const yearSpan = $('#current-year');
   const ctaWa = $('#cta-whatsapp');
+
+  const bookingModal = $('#booking-modal');
+  const bookingForm = $('#booking-form');
+  const modalBackdrop = $('#modal-backdrop');
+  const modalBox = $('#modal-box');
+  const modalClose = $('#modal-close');
+  const modalCancelBtn = $('#modal-cancel-btn');
+  const modalPackageName = $('#modal-package-name');
+  const modalPackagePrice = $('#modal-package-price');
 
   // ─── THEME ────────────────────────────────────────────────────
 
@@ -182,14 +242,14 @@
     }
 
     // Set page title & SEO description
-    document.title = lang === 'en' ? 'ReasonVisual — Documentation Services' : 'ReasonVisual — Jasa Dokumentasi';
+    document.title = lang === 'en' ? 'ReasonVisual - Documentation Services' : 'ReasonVisual - Jasa Dokumentasi';
     const metaDesc = $('meta[name="description"]');
     if (metaDesc) {
       metaDesc.setAttribute(
         'content',
         lang === 'en'
-          ? 'ReasonVisual — Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company Profile, Graduation & other documentations. High quality photos, videos, and drone shoots.'
-          : 'ReasonVisual — Jasa dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company Profile, Wisuda & dokumentasi lainnya. Foto, video, dan drone shoot berkualitas tinggi.'
+          ? 'ReasonVisual - Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company Profile, Graduation & other documentations. High quality photos, videos, and drone shoots.'
+          : 'ReasonVisual - Jasa dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company Profile, Wisuda & dokumentasi lainnya. Foto, video, dan drone shoot berkualitas tinggi.'
       );
     }
 
@@ -289,11 +349,150 @@
     $$('.reveal').forEach((el) => observer.observe(el));
   }
 
-  // ─── WHATSAPP ─────────────────────────────────────────────────
+  // ─── WHATSAPP & BOOKING MODAL ─────────────────────────────────
+
+  let selectedPackage = null;
+  let modalChatLang = 'en';
+
+  function updateModalLangUI(lang) {
+    modalChatLang = lang;
+
+    // Update modal language selector pills active state classes
+    const btnEn = $('#modal-lang-en');
+    const btnId = $('#modal-lang-id');
+    if (btnEn && btnId) {
+      if (lang === 'en') {
+        btnEn.className = "py-2 rounded-lg text-xs font-semibold tracking-wider transition-all bg-white dark:bg-[#1C1C1C] text-sand-900 dark:text-sand-100 shadow-sm";
+        btnId.className = "py-2 rounded-lg text-xs font-semibold tracking-wider transition-all text-sand-500 dark:text-sand-400 hover:text-sand-800 dark:hover:text-sand-200";
+      } else {
+        btnId.className = "py-2 rounded-lg text-xs font-semibold tracking-wider transition-all bg-white dark:bg-[#1C1C1C] text-sand-900 dark:text-sand-100 shadow-sm";
+        btnEn.className = "py-2 rounded-lg text-xs font-semibold tracking-wider transition-all text-sand-500 dark:text-sand-400 hover:text-sand-800 dark:hover:text-sand-200";
+      }
+    }
+
+    // Update placeholders based on chat language selection
+    const nameInput = $('#booking-name');
+    if (nameInput) {
+      nameInput.placeholder = lang === 'en' ? 'e.g., Alex Johnson' : 'contoh: Budi Santoso';
+    }
+    const locationInput = $('#booking-location');
+    if (locationInput) {
+      locationInput.placeholder = lang === 'en' ? 'e.g., Bali, Indonesia' : 'contoh: Bali, Indonesia';
+    }
+
+    // Update package name text based on chat language selection
+    if (selectedPackage && PACKAGES[selectedPackage]) {
+      const pkg = PACKAGES[selectedPackage];
+      const name = lang === 'en' ? pkg.name_en : pkg.name_id;
+      if (modalPackageName) modalPackageName.textContent = name;
+    }
+  }
+
+  function openBookingModal(pkgId) {
+    selectedPackage = pkgId;
+    const pkg = PACKAGES[pkgId];
+    if (!pkg) return;
+
+    // Initialize the modal chat language matching the website's current active language
+    updateModalLangUI(currentLang);
+
+    const name = currentLang === 'en' ? pkg.name_en : pkg.name_id;
+    if (modalPackageName) modalPackageName.textContent = name;
+    if (modalPackagePrice) modalPackagePrice.textContent = pkg.price;
+
+    if (bookingModal && modalBackdrop && modalBox) {
+      bookingModal.classList.remove('hidden');
+      bookingModal.classList.add('flex');
+
+      setTimeout(() => {
+        modalBackdrop.classList.remove('opacity-0');
+        modalBackdrop.classList.add('opacity-100');
+        modalBox.classList.remove('scale-95', 'opacity-0');
+        modalBox.classList.add('scale-100', 'opacity-100');
+      }, 10);
+
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeBookingModal() {
+    if (!bookingModal || !modalBackdrop || !modalBox) return;
+
+    modalBackdrop.classList.remove('opacity-100');
+    modalBackdrop.classList.add('opacity-0');
+    modalBox.classList.remove('scale-100', 'opacity-100');
+    modalBox.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+      bookingModal.classList.add('hidden');
+      bookingModal.classList.remove('flex');
+      if (bookingForm) bookingForm.reset();
+      selectedPackage = null;
+    }, 300);
+
+    document.body.style.overflow = '';
+  }
+
+  function handleBookingSubmit(e) {
+    e.preventDefault();
+    if (!selectedPackage) return;
+
+    const nameInput = $('#booking-name');
+    const dateInput = $('#booking-date');
+    const locationInput = $('#booking-location');
+
+    const name = nameInput ? nameInput.value.trim() : '';
+    const dateVal = dateInput ? dateInput.value : '';
+    const location = locationInput ? locationInput.value.trim() : '';
+
+    let formattedDate = dateVal;
+    if (dateVal) {
+      const d = new Date(dateVal);
+      if (!isNaN(d.getTime())) {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        // Use chosen modalChatLang for date format
+        formattedDate = d.toLocaleDateString(modalChatLang === 'en' ? 'en-US' : 'id-ID', options);
+      }
+    }
+
+    const pkg = PACKAGES[selectedPackage];
+    const pkgName = modalChatLang === 'en' ? pkg.name_en : pkg.name_id;
+    const pkgPrice = pkg.price;
+
+    let text = "";
+    if (modalChatLang === 'en') {
+      text = `Hello!\n\nI am interested in booking the ${pkgName}.\nPrice: ${pkgPrice}\n\nBooking Details:\n- Name: ${name}\n- Date: ${formattedDate}\n- Location: ${location}\n\nIs this slot available?`;
+    } else {
+      text = `Halo!\n\nSaya tertarik untuk memesan paket ${pkgName}.\nHarga: ${pkgPrice}\n\nDetail Booking:\n- Nama: ${name}\n- Tanggal Acara: ${formattedDate}\n- Lokasi Acara: ${location}\n\nApakah slot tanggal tersebut masih tersedia?`;
+    }
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+    closeBookingModal();
+  }
 
   function setupWhatsapp() {
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`;
     if (ctaWa) ctaWa.href = url;
+
+    $$('[data-package]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pkgId = btn.getAttribute('data-package');
+        openBookingModal(pkgId);
+      });
+    });
+
+    // Modal language selector events - does not affect global site language
+    const btnEn = $('#modal-lang-en');
+    const btnId = $('#modal-lang-id');
+    if (btnEn) btnEn.addEventListener('click', () => updateModalLangUI('en'));
+    if (btnId) btnId.addEventListener('click', () => updateModalLangUI('id'));
+
+    if (modalClose) modalClose.addEventListener('click', closeBookingModal);
+    if (modalCancelBtn) modalCancelBtn.addEventListener('click', closeBookingModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeBookingModal);
+    if (bookingForm) bookingForm.addEventListener('submit', handleBookingSubmit);
   }
 
   // ─── GALLERY RENDER ───────────────────────────────────────────

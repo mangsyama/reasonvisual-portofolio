@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReasonVisual — Documentation Services</title>
-  <meta name="description" content="ReasonVisual — Jasa dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company Profile, Wisuda & dokumentasi lainnya. Foto, video, dan drone shoot berkualitas tinggi." />
+  <title>ReasonVisual - Documentation Services</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23B8784E'><path d='M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z'/></svg>">
+  <meta name="description" content="ReasonVisual - Jasa dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company Profile, Wisuda & dokumentasi lainnya. Foto, video, dan drone shoot berkualitas tinggi." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;500;600;700;1,400;1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -22,8 +23,8 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['DM Sans', 'system-ui', 'sans-serif'],
-            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+            serif: ['Poppins', 'system-ui', 'sans-serif'],
           },
           colors: {
             sand: {
@@ -52,7 +53,7 @@
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: 'DM Sans', system-ui, sans-serif;
+      font-family: 'Poppins', system-ui, sans-serif;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
 
@@ -430,31 +431,37 @@
             <p data-i18n="price_silver_desc" class="text-sand-500 text-sm leading-relaxed">Budget-friendly option for specific documentation needs.</p>
           </div>
 
-          <div class="space-y-4 mb-8 flex-1">
+          <div class="space-y-4 flex-1">
             <!-- Option 1 -->
-            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60">
-              <div class="flex items-baseline justify-between mb-2">
-                <span data-i18n="price_drone_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Drone Video Only</span>
-                <span data-i18n="price_no_edit" class="text-xs text-sand-400">No Edit</span>
+            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
+              <div class="mb-3">
+                <div class="flex items-baseline justify-between mb-2">
+                  <span data-i18n="price_drone_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Drone Video Only</span>
+                  <span data-i18n="price_no_edit" class="text-xs text-sand-400">No Edit</span>
+                </div>
+                <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
+                  Rp 999<span class="text-base text-sand-400 font-sans">.000</span>
+                </div>
               </div>
-              <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
-                Rp 999<span class="text-base text-sand-400 font-sans">.000</span>
-              </div>
+              <button data-package="silver_drone" data-i18n="price_btn_silver_drone" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+                Choose Drone Only
+              </button>
             </div>
             <!-- Option 2 -->
-            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60">
-              <div class="mb-2">
-                <span data-i18n="price_photo_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Photo Documentation Only</span>
+            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
+              <div class="mb-3">
+                <div class="mb-2">
+                  <span data-i18n="price_photo_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Photo Documentation Only</span>
+                </div>
+                <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
+                  Rp 1.499<span class="text-base text-sand-400 font-sans">.000</span>
+                </div>
               </div>
-              <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
-                Rp 1.499<span class="text-base text-sand-400 font-sans">.000</span>
-              </div>
+              <button data-package="silver_photo" data-i18n="price_btn_silver_photo" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+                Choose Photo Only
+              </button>
             </div>
           </div>
-
-          <a href="#contact" data-i18n="price_btn_silver" class="block text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
-            Choose Silver
-          </a>
         </div>
 
         <!-- PREMIUM (Featured) -->
@@ -467,7 +474,7 @@
           <div class="mb-6 mt-2">
             <span class="inline-block px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Premium</span>
             <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
-              Rp 3.499<span class="text-xl text-sand-400 font-sans">.000</span>
+              Rp 2.999<span class="text-xl text-sand-400 font-sans">.000</span>
             </div>
             <p data-i18n="price_best_complete" class="text-sand-500 text-sm">Best complete package</p>
           </div>
@@ -491,9 +498,9 @@
             </li>
           </ul>
 
-          <a href="#contact" data-i18n="price_btn_premium" class="block text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-sm font-semibold rounded-full transition-colors shadow-lg shadow-accent/20">
+          <button data-package="premium" data-i18n="price_btn_premium" class="block w-full text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-sm font-semibold rounded-full transition-colors">
             Choose Premium
-          </a>
+          </button>
         </div>
 
         <!-- GOLD -->
@@ -501,7 +508,7 @@
           <div class="mb-6">
             <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Gold</span>
             <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
-              Rp 2.499<span class="text-xl text-sand-400 font-sans">.000</span>
+              Rp 1.999<span class="text-xl text-sand-400 font-sans">.000</span>
             </div>
             <p data-i18n="price_video_complete" class="text-sand-500 text-sm">Complete video documentation</p>
           </div>
@@ -521,9 +528,9 @@
             </li>
           </ul>
 
-          <a href="#contact" data-i18n="price_btn_gold" class="block text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+          <button data-package="gold" data-i18n="price_btn_gold" class="block w-full text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
             Choose Gold
-          </a>
+          </button>
         </div>
 
       </div>
@@ -628,6 +635,92 @@
       </div>
     </div>
   </footer>
+
+  <!-- ═══════════════════════════════════════
+       BOOKING MODAL
+  ═══════════════════════════════════════ -->
+  <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+    
+    <!-- Modal Content Box -->
+    <div id="modal-box" class="relative z-10 w-full max-w-lg bg-sand-50 dark:bg-[#1C1C1C] border border-sand-200 dark:border-sand-800/80 rounded-2xl shadow-2xl p-6 sm:p-8 transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="modal-close" class="absolute top-4 right-4 text-sand-400 hover:text-sand-600 dark:hover:text-sand-200 transition-colors" aria-label="Close modal">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- Title / Header -->
+      <div class="mb-6">
+        <h3 id="modal-title-text" data-i18n="modal_title" class="font-serif text-2xl sm:text-3xl font-medium text-sand-900 dark:text-sand-100 mb-2">Book Package</h3>
+        <p id="modal-subtitle-text" data-i18n="modal_subtitle" class="text-sand-500 text-xs sm:text-sm">Please fill in the details below to prepare your WhatsApp message.</p>
+      </div>
+
+      <!-- Package Summary Card -->
+      <div class="p-4 rounded-xl bg-sand-100/70 dark:bg-[#252525] border border-sand-200 dark:border-sand-800/80 mb-6 flex justify-between items-center">
+        <div>
+          <span data-i18n="modal_package_selected" class="block text-[10px] uppercase tracking-wider text-sand-400 font-semibold mb-1">Selected Package</span>
+          <span id="modal-package-name" class="font-serif text-base sm:text-lg font-medium text-sand-900 dark:text-sand-100">Premium Package</span>
+        </div>
+        <div class="text-right">
+          <span data-i18n="modal_price" class="block text-[10px] uppercase tracking-wider text-sand-400 font-semibold mb-1">Price</span>
+          <span id="modal-package-price" class="font-sans text-base sm:text-lg font-bold text-accent">Rp 2.999.000</span>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <form id="booking-form" class="space-y-4">
+        <!-- Message Language Selector -->
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-sand-500 mb-1.5" data-i18n="modal_label_chat_lang">Chat Language</label>
+          <div class="grid grid-cols-2 gap-1.5 p-1 bg-sand-200/55 dark:bg-[#121212] border border-sand-300/40 dark:border-sand-800/85 rounded-xl">
+            <button type="button" id="modal-lang-en" class="py-2 rounded-lg text-xs font-semibold tracking-wider transition-all bg-white dark:bg-[#1C1C1C] text-sand-900 dark:text-sand-100 shadow-sm">
+              ENGLISH
+            </button>
+            <button type="button" id="modal-lang-id" class="py-2 rounded-lg text-xs font-semibold tracking-wider transition-all text-sand-500 dark:text-sand-400 hover:text-sand-800 dark:hover:text-sand-200">
+              BAHASA INDONESIA
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label for="booking-name" data-i18n="modal_label_name" class="block text-xs font-semibold uppercase tracking-wider text-sand-500 mb-1.5">Your Name</label>
+          <input type="text" id="booking-name" required
+                 class="w-full px-4 py-2.5 rounded-xl border border-sand-300 dark:border-sand-700 bg-white dark:bg-[#121212] text-sand-900 dark:text-sand-100 text-sm focus:ring-1 focus:ring-accent focus:border-accent outline-none transition-all placeholder-sand-400 dark:placeholder-sand-600" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="booking-date" data-i18n="modal_label_date" class="block text-xs font-semibold uppercase tracking-wider text-sand-500 mb-1.5">Event Date</label>
+            <input type="date" id="booking-date" required
+                   class="w-full px-4 py-2.5 rounded-xl border border-sand-300 dark:border-sand-700 bg-white dark:bg-[#121212] text-sand-900 dark:text-sand-100 text-sm focus:ring-1 focus:ring-accent focus:border-accent outline-none transition-all" />
+          </div>
+          <div>
+            <label for="booking-location" data-i18n="modal_label_location" class="block text-xs font-semibold uppercase tracking-wider text-sand-500 mb-1.5">Event Location</label>
+            <input type="text" id="booking-location" required
+                   class="w-full px-4 py-2.5 rounded-xl border border-sand-300 dark:border-sand-700 bg-white dark:bg-[#121212] text-sand-900 dark:text-sand-100 text-sm focus:ring-1 focus:ring-accent focus:border-accent outline-none transition-all placeholder-sand-400 dark:placeholder-sand-600" />
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-3 pt-4 border-t border-sand-200 dark:border-sand-800 mt-6">
+          <button type="button" id="modal-cancel-btn" data-i18n="modal_btn_cancel"
+                  class="flex-1 px-5 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs sm:text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+            Cancel
+          </button>
+          <button type="submit"
+                  class="flex-1 px-5 py-3 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs sm:text-sm font-semibold rounded-full shadow-lg shadow-[#25D366]/10 hover:shadow-[#25D366]/20 transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-i18n="modal_btn_send">Send via WhatsApp</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
 
   <script src="assets/js/app.js"></script>
 </body>
