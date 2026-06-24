@@ -245,6 +245,21 @@
     .animate-scroll-dot {
       animation: scroll-dot 2.2s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
     }
+    /* ── Photo Sub-Filters Collapsible ──────── */
+    #photo-sub-filters {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      margin-bottom: 0;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                  opacity 0.25s ease-out, 
+                  margin-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #photo-sub-filters.sub-filters-open {
+      max-height: 140px;
+      opacity: 1;
+      margin-bottom: 2.5rem;
+    }
   </style>
 </head>
 
@@ -558,8 +573,17 @@
         <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-filter="video" data-i18n="filter_video">Videos</button>
       </div>
 
-      <div id="gallery-loader" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"></div>
-      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"></div>
+      <!-- Photo Categories Sub-Filters -->
+      <div id="photo-sub-filters" class="flex flex-wrap gap-2">
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-accent text-white shadow-sm" data-subfilter="all" data-i18n="sub_all">All Photos</button>
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="wedding" data-i18n="tag_wedding">Wedding</button>
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="bali_ceremony" data-i18n="tag_bali">Bali Ceremony</button>
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="travel" data-i18n="tag_travel">Travel</button>
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="graduation" data-i18n="tag_graduation">Graduation</button>
+      </div>
+
+      <div id="gallery-loader" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"></div>
+      <div id="gallery-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"></div>
     </div>
   </section>
 
@@ -719,6 +743,37 @@
         </div>
       </form>
 
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       LIGHTBOX MODAL
+  ═══════════════════════════════════════ -->
+  <div id="lightbox-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div id="lightbox-backdrop" class="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity duration-300 opacity-0"></div>
+    
+    <!-- Close Button -->
+    <button id="lightbox-close" class="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-50 p-2" aria-label="Close lightbox">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Lightbox Box -->
+    <div id="lightbox-box" class="relative z-10 max-w-5xl w-full h-full max-h-[85vh] flex items-center justify-center transform scale-95 opacity-0 transition-all duration-300 pointer-events-none">
+      <!-- For Images -->
+      <img id="lightbox-img" src="" alt="" class="hidden max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none pointer-events-auto" />
+      
+      <!-- For Videos (YouTube / Instagram) -->
+      <div id="lightbox-video-container" class="hidden w-full max-w-[800px] aspect-video bg-black rounded-lg overflow-hidden shadow-2xl pointer-events-auto">
+        <iframe id="lightbox-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+
+      <!-- For Instagram Blockquote Embeds -->
+      <div id="lightbox-instagram-container" class="hidden w-full max-w-[450px] max-h-[80vh] overflow-y-auto bg-white rounded-xl shadow-2xl pointer-events-auto p-1.5">
+        <div id="lightbox-instagram-content"></div>
+      </div>
     </div>
   </div>
 

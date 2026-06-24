@@ -92,6 +92,8 @@
       filter_all: "All",
       filter_photo: "Photos",
       filter_video: "Videos",
+      sub_all: "All Photos",
+      tag_bali: "Bali Ceremony",
       contact_eyebrow: "Contact",
       contact_title: "Book Now",
       contact_desc: "Contact us for consultation and booking your documentation schedule.",
@@ -164,6 +166,8 @@
       filter_all: "Semua",
       filter_photo: "Foto",
       filter_video: "Video",
+      sub_all: "Semua Foto",
+      tag_bali: "Upacara Bali",
       contact_eyebrow: "Kontak",
       contact_title: "Booking Sekarang",
       contact_desc: "Hubungi kami untuk konsultasi dan booking jadwal dokumentasi Anda.",
@@ -186,6 +190,11 @@
   };
 
   let currentLang = localStorage.getItem('rv-lang') || 'en';
+  let galleryRotationInterval = null;
+  let activeGallerySubset = [];
+  let nextGallerySubset = [];
+  let isLightboxOpen = false;
+  let currentPhotoSubfilter = 'all';
 
   // ─── DOM ──────────────────────────────────────────────────────
   const $ = (sel) => document.querySelector(sel);
@@ -209,6 +218,16 @@
   const modalCancelBtn = $('#modal-cancel-btn');
   const modalPackageName = $('#modal-package-name');
   const modalPackagePrice = $('#modal-package-price');
+
+  const lightboxModal = $('#lightbox-modal');
+  const lightboxBackdrop = $('#lightbox-backdrop');
+  const lightboxBox = $('#lightbox-box');
+  const lightboxImg = $('#lightbox-img');
+  const lightboxClose = $('#lightbox-close');
+  const lightboxVideoContainer = $('#lightbox-video-container');
+  const lightboxIframe = $('#lightbox-iframe');
+  const lightboxInstagramContainer = $('#lightbox-instagram-container');
+  const lightboxInstagramContent = $('#lightbox-instagram-content');
 
   // ─── THEME ────────────────────────────────────────────────────
 
@@ -274,16 +293,13 @@
 
   function refreshGallery() {
     if (!window.galleryData) return;
-    const activeBtn = $('.gallery-filter-btn.bg-accent');
-    const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
-    if (window.galleryData.length === 0) {
-      renderEmptyPlaceholders(filterVal);
-      return;
+    if (activeGallerySubset && activeGallerySubset.length > 0) {
+      renderGalleryItems(activeGallerySubset);
+    } else {
+      const activeBtn = $('.gallery-filter-btn.bg-accent');
+      const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+      startGalleryRotation(filterVal);
     }
-    const filtered = filterVal === 'all'
-      ? window.galleryData
-      : window.galleryData.filter((item) => item.tipe_media === filterVal);
-    renderGalleryItems(filtered);
   }
 
   // ─── NAVBAR ───────────────────────────────────────────────────
@@ -539,11 +555,12 @@
 
   function imageCard(item) {
     const title = currentLang === 'en' ? item.judul_en : item.judul_id;
+    const thumbSrc = item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/');
     return `
-      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm">
+      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="gambar" data-src="${getImageSrc(item.sumber_media)}" data-alt="${title}">
         <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
           <img
-            src="${getImageSrc(item.sumber_media)}"
+            src="${getImageSrc(thumbSrc)}"
             alt="${title}"
             loading="lazy"
             class="relative z-10 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:scale-105"
@@ -557,16 +574,24 @@
 
   function videoCard(item) {
     const title = currentLang === 'en' ? item.judul_en : item.judul_id;
+    const coverSrc = item.cover_image ? item.cover_image : 'gallery-photo-thumb/DSC01482.JPG';
     return `
-      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm">
-        <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 overflow-hidden">
-          <iframe
-            src="${item.sumber_media}"
-            title="${title}"
-            class="absolute inset-0 w-full h-full border-0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen loading="lazy"
-          ></iframe>
+      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${item.sumber_media}" data-alt="${title}">
+        <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
+          <img
+            src="${getImageSrc(coverSrc)}"
+            alt="${title}"
+            loading="lazy"
+            class="relative z-10 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:scale-105"
+            onload="this.style.opacity='1'; this.parentElement.classList.remove('skeleton');"
+            onerror="this.style.display='none';"
+          />
+          <!-- Play Button Overlay -->
+          <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/25 group-hover:bg-black/40 transition-colors duration-300">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-white/25 backdrop-blur-md text-white border border-white/30 transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <i class="fa-solid fa-play text-lg ml-0.5"></i>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -589,6 +614,273 @@
     });
   }
 
+  function getRandomSubset(arr, limit) {
+    if (arr.length <= limit) return arr;
+    const shuffled = [...arr];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled.slice(0, limit);
+  }
+
+  function preloadImages(items) {
+    if (!items || items.length === 0) return;
+    items.forEach((item) => {
+      if (item.tipe_media === 'gambar') {
+        const img = new Image();
+        const thumbSrc = item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/');
+        img.src = getImageSrc(thumbSrc);
+      }
+    });
+  }
+
+  function getFilteredGalleryData(filterVal) {
+    if (!window.galleryData) return [];
+    if (filterVal === 'all') {
+      return window.galleryData;
+    }
+    let data = window.galleryData.filter((item) => item.tipe_media === filterVal);
+    if (filterVal === 'gambar' && currentPhotoSubfilter !== 'all') {
+      data = data.filter((item) => item.kategori === currentPhotoSubfilter);
+    }
+    return data;
+  }
+
+  function startGalleryRotation(filterVal) {
+    if (galleryRotationInterval) {
+      clearInterval(galleryRotationInterval);
+      galleryRotationInterval = null;
+    }
+
+    if (!window.galleryData || window.galleryData.length === 0) {
+      renderEmptyPlaceholders(filterVal);
+      return;
+    }
+
+    const filtered = getFilteredGalleryData(filterVal);
+
+    if (filtered.length === 0) {
+      renderEmptyPlaceholders(filterVal);
+      return;
+    }
+
+    activeGallerySubset = getRandomSubset(filtered, 8);
+    renderGalleryItems(activeGallerySubset);
+
+    if (filtered.length > 8) {
+      nextGallerySubset = getRandomSubset(filtered, 8);
+      preloadImages(nextGallerySubset);
+
+      galleryRotationInterval = setInterval(() => {
+        if (isLightboxOpen) return;
+
+        const cards = galleryGrid.querySelectorAll('.gallery-card');
+        if (cards.length > 0) {
+          cards.forEach((card) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-15px)';
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          });
+          setTimeout(() => {
+            activeGallerySubset = nextGallerySubset;
+            renderGalleryItems(activeGallerySubset);
+            
+            nextGallerySubset = getRandomSubset(filtered, 8);
+            preloadImages(nextGallerySubset);
+          }, 400);
+        } else {
+          activeGallerySubset = nextGallerySubset;
+          renderGalleryItems(activeGallerySubset);
+          nextGallerySubset = getRandomSubset(filtered, 8);
+          preloadImages(nextGallerySubset);
+        }
+      }, 10000);
+    }
+  }
+
+  function resumeGalleryRotation(filterVal) {
+    if (galleryRotationInterval) {
+      clearInterval(galleryRotationInterval);
+      galleryRotationInterval = null;
+    }
+
+    const filtered = getFilteredGalleryData(filterVal);
+
+    if (filtered.length > 8) {
+      nextGallerySubset = getRandomSubset(filtered, 8);
+      preloadImages(nextGallerySubset);
+
+      galleryRotationInterval = setInterval(() => {
+        if (isLightboxOpen) return;
+
+        const cards = galleryGrid.querySelectorAll('.gallery-card');
+        if (cards.length > 0) {
+          cards.forEach((card) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-15px)';
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          });
+          setTimeout(() => {
+            activeGallerySubset = nextGallerySubset;
+            renderGalleryItems(activeGallerySubset);
+            
+            nextGallerySubset = getRandomSubset(filtered, 8);
+            preloadImages(nextGallerySubset);
+          }, 400);
+        } else {
+          activeGallerySubset = nextGallerySubset;
+          renderGalleryItems(activeGallerySubset);
+          nextGallerySubset = getRandomSubset(filtered, 8);
+          preloadImages(nextGallerySubset);
+        }
+      }, 10000);
+    }
+  }
+
+  function openLightbox(src, type, alt) {
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg || !lightboxVideoContainer || !lightboxIframe || !lightboxInstagramContainer || !lightboxInstagramContent) return;
+
+    isLightboxOpen = true;
+
+    if (galleryRotationInterval) {
+      clearInterval(galleryRotationInterval);
+      galleryRotationInterval = null;
+    }
+
+    // Hide everything first
+    lightboxImg.classList.add('hidden');
+    lightboxVideoContainer.classList.add('hidden');
+    lightboxInstagramContainer.classList.add('hidden');
+
+    const isInstagram = src.includes('instagram.com');
+
+    if (type === 'gambar') {
+      lightboxImg.classList.remove('hidden');
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+    } else if (type === 'video') {
+      if (isInstagram) {
+        lightboxInstagramContainer.classList.remove('hidden');
+        
+        // Clean URL to base post URL
+        const permalink = src.replace('/embed/', '/');
+        
+        lightboxInstagramContent.innerHTML = `
+          <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
+            <div class="flex flex-col items-center justify-center py-24 text-sand-400 gap-3">
+              <i class="fa-solid fa-circle-notch animate-spin text-3xl text-accent"></i>
+              <span class="text-xs font-semibold tracking-wider text-sand-500 uppercase">Loading Instagram Post...</span>
+            </div>
+          </blockquote>
+        `;
+
+        if (window.instgrm) {
+          window.instgrm.Embeds.process();
+        } else {
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = "//www.instagram.com/embed.js";
+          document.body.appendChild(script);
+        }
+      } else {
+        lightboxVideoContainer.classList.remove('hidden');
+        lightboxIframe.src = src;
+      }
+    }
+
+    lightboxModal.classList.remove('hidden');
+    lightboxModal.classList.add('flex');
+
+    setTimeout(() => {
+      lightboxBackdrop.classList.remove('opacity-0');
+      lightboxBackdrop.classList.add('opacity-100');
+      lightboxBox.classList.remove('scale-95', 'opacity-0');
+      lightboxBox.classList.add('scale-100', 'opacity-100');
+    }, 10);
+
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg || !lightboxIframe || !lightboxVideoContainer || !lightboxInstagramContainer || !lightboxInstagramContent) return;
+
+    lightboxBackdrop.classList.remove('opacity-100');
+    lightboxBackdrop.classList.add('opacity-0');
+    lightboxBox.classList.remove('scale-100', 'opacity-100');
+    lightboxBox.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+      lightboxModal.classList.add('hidden');
+      lightboxModal.classList.remove('flex');
+      
+      lightboxImg.src = '';
+      lightboxIframe.src = '';
+      lightboxInstagramContent.innerHTML = '';
+      
+      lightboxImg.classList.add('hidden');
+      lightboxVideoContainer.classList.add('hidden');
+      lightboxInstagramContainer.classList.add('hidden');
+
+      isLightboxOpen = false;
+
+      const activeBtn = $('.gallery-filter-btn.bg-accent');
+      const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+      resumeGalleryRotation(filterVal);
+    }, 300);
+
+    document.body.style.overflow = '';
+  }
+
+  function setupLightbox() {
+    if (galleryGrid) {
+      galleryGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.gallery-card');
+        if (!card) return;
+        
+        const type = card.getAttribute('data-type');
+        const src = card.getAttribute('data-src');
+        const alt = card.getAttribute('data-alt') || '';
+
+        if (src && type) {
+          openLightbox(src, type, alt);
+        }
+      });
+    }
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isLightboxOpen) {
+        closeLightbox();
+      }
+    });
+  }
+
+  function showPhotoSubFilters() {
+    const photoSubFilters = $('#photo-sub-filters');
+    if (!photoSubFilters) return;
+    photoSubFilters.classList.add('sub-filters-open');
+  }
+
+  function hidePhotoSubFilters() {
+    const photoSubFilters = $('#photo-sub-filters');
+    if (!photoSubFilters) return;
+    photoSubFilters.classList.remove('sub-filters-open');
+    
+    currentPhotoSubfilter = 'all';
+    const subBtns = $$('.photo-sub-filter-btn');
+    subBtns.forEach((btn) => {
+      const subVal = btn.getAttribute('data-subfilter');
+      if (subVal === 'all') {
+        btn.className = "photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-accent text-white shadow-sm";
+      } else {
+        btn.className = "photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700";
+      }
+    });
+  }
+
   function setupGalleryFilters() {
     const filterBtns = $$('.gallery-filter-btn');
     if (filterBtns.length === 0) return;
@@ -606,17 +898,32 @@
         btn.classList.add('bg-accent', 'text-white', 'shadow-md', 'shadow-accent/15');
         btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
 
-        // Render filtered items
-        if (window.galleryData) {
-          if (window.galleryData.length === 0) {
-            renderEmptyPlaceholders(filterVal);
-          } else {
-            const filtered = filterVal === 'all'
-              ? window.galleryData
-              : window.galleryData.filter((item) => item.tipe_media === filterVal);
-            renderGalleryItems(filtered);
-          }
+        if (filterVal === 'gambar') {
+          showPhotoSubFilters();
+        } else {
+          hidePhotoSubFilters();
         }
+
+        startGalleryRotation(filterVal);
+      });
+    });
+
+    const subBtns = $$('.photo-sub-filter-btn');
+    subBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const subVal = btn.getAttribute('data-subfilter');
+        currentPhotoSubfilter = subVal;
+
+        // Update active classes on subfilter buttons
+        subBtns.forEach((b) => {
+          b.classList.remove('bg-accent', 'text-white', 'shadow-sm');
+          b.classList.add('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
+        });
+
+        btn.classList.add('bg-accent', 'text-white', 'shadow-sm');
+        btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
+
+        startGalleryRotation('gambar');
       });
     });
   }
@@ -640,12 +947,8 @@
 
       if (galleryGrid) {
         window.galleryData = data;
-        if (data.length === 0) {
-          renderEmptyPlaceholders('all');
-        } else {
-          renderGalleryItems(data);
-        }
         setupGalleryFilters();
+        startGalleryRotation('all');
       }
     } catch (err) {
       console.error('Gallery load error:', err);
@@ -669,6 +972,7 @@
     handleNavScroll();
     highlightActiveLink();
     loadGallery();
+    setupLightbox();
 
     if (yearSpan) yearSpan.textContent = new Date().getFullYear();
     window.addEventListener('scroll', () => { handleNavScroll(); highlightActiveLink(); });

@@ -1,1 +1,380 @@
-[]
+[
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC01482.JPG",
+    "kategori": "travel",
+    "judul_en": "Pre-Wedding Session",
+    "judul_id": "Sesi Pre-Wedding"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC01558.JPG",
+    "kategori": "travel",
+    "judul_en": "Wedding Reception",
+    "judul_id": "Resepsi Pernikahan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC01585.JPG",
+    "kategori": "travel",
+    "judul_en": "Bride & Groom Portrait",
+    "judul_id": "Potret Pengantin"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC02284.JPG",
+    "kategori": "travel",
+    "judul_en": "Wedding Ceremony Details",
+    "judul_id": "Detail Upacara Pernikahan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC02292.JPG",
+    "kategori": "travel",
+    "judul_en": "The Sacred Vows",
+    "judul_id": "Janji Suci"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC02295.JPG",
+    "kategori": "travel",
+    "judul_en": "Groom's Preparation",
+    "judul_id": "Persiapan Pengantin Pria"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC02338.JPG",
+    "kategori": "travel",
+    "judul_en": "Bridal Shower Celebration",
+    "judul_id": "Perayaan Bridal Shower"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Travel/DSC02844.JPG",
+    "kategori": "travel",
+    "judul_en": "Family Portrait Session",
+    "judul_id": "Sesi Foto Keluarga"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00104.jpg",
+    "kategori": "graduation",
+    "judul_en": "Scenic Travel Documentation",
+    "judul_id": "Dokumentasi Perjalanan Wisata"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00128.jpg",
+    "kategori": "graduation",
+    "judul_en": "Mountain Drone Shoot",
+    "judul_id": "Dokumentasi Drone Gunung"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00233.jpg",
+    "kategori": "graduation",
+    "judul_en": "Beach Resort Shoot",
+    "judul_id": "Foto Resort Pantai"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00306.jpg",
+    "kategori": "graduation",
+    "judul_en": "Sunset Travel Landscape",
+    "judul_id": "Lanskap Perjalanan Senja"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00392.jpg",
+    "kategori": "graduation",
+    "judul_en": "Adventure Journey Documentation",
+    "judul_id": "Dokumentasi Petualangan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00414.jpg",
+    "kategori": "graduation",
+    "judul_en": "Aerial City View",
+    "judul_id": "Foto Udara Lanskap Kota"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00462.jpg",
+    "kategori": "graduation",
+    "judul_en": "Tropical Paradise Drone",
+    "judul_id": "Drone Pantai Tropis"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00502.jpg",
+    "kategori": "graduation",
+    "judul_en": "Outdoor Event Shoot",
+    "judul_id": "Dokumentasi Acara Outdoor"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00513.jpg",
+    "kategori": "graduation",
+    "judul_en": "Morning Dew Landscape",
+    "judul_id": "Lanskap Embun Pagi"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00548.jpg",
+    "kategori": "graduation",
+    "judul_en": "Cinematic Drone Path",
+    "judul_id": "Jalur Drone Sinematik"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00562.jpg",
+    "kategori": "graduation",
+    "judul_en": "Luxury Resort Aerial",
+    "judul_id": "Foto Udara Resort Mewah"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00565.jpg",
+    "kategori": "graduation",
+    "judul_en": "Forest Exploration Documentation",
+    "judul_id": "Dokumentasi Jelajah Hutan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-00623.jpg",
+    "kategori": "graduation",
+    "judul_en": "Island Travel Adventure",
+    "judul_id": "Petualangan Wisata Pulau"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-08828.jpg",
+    "kategori": "graduation",
+    "judul_en": "Corporate Gathering Event",
+    "judul_id": "Acara Gathering Perusahaan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-08843.jpg",
+    "kategori": "graduation",
+    "judul_en": "Business Conference Portrait",
+    "judul_id": "Dokumentasi Konferensi Bisnis"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-08847.jpg",
+    "kategori": "graduation",
+    "judul_en": "Corporate Seminar Session",
+    "judul_id": "Sesi Seminar Perusahaan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-08857.jpg",
+    "kategori": "graduation",
+    "judul_en": "Team Building Activity",
+    "judul_id": "Aktivitas Team Building"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Graduation/HLX-08903.jpg",
+    "kategori": "graduation",
+    "judul_en": "Executive Board Meeting",
+    "judul_id": "Dokumentasi Rapat Direksi"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX1916-Enhanced-NR.JPG",
+    "kategori": "wedding",
+    "judul_en": "Graduation Day Ceremony",
+    "judul_id": "Upacara Wisuda Kelulusan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX1948.JPG",
+    "kategori": "wedding",
+    "judul_en": "Graduation Celebration",
+    "judul_id": "Perayaan Hari Wisuda"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2071.JPG",
+    "kategori": "wedding",
+    "judul_en": "Corporate Office Shoot",
+    "judul_id": "Foto Profil Kantor Perusahaan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2073.JPG",
+    "kategori": "wedding",
+    "judul_en": "Company Profile Workspace",
+    "judul_id": "Ruang Kerja Perusahaan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2137.JPG",
+    "kategori": "wedding",
+    "judul_en": "Product Launch Event",
+    "judul_id": "Acara Peluncuran Produk"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2139.JPG",
+    "kategori": "wedding",
+    "judul_en": "Marketing Campaign Shoot",
+    "judul_id": "Foto Kampanye Pemasaran"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2232.JPG",
+    "kategori": "wedding",
+    "judul_en": "Music Festival Documentation",
+    "judul_id": "Dokumentasi Festival Musik"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2249.JPG",
+    "kategori": "wedding",
+    "judul_en": "Live Concert Performance",
+    "judul_id": "Dokumentasi Konser Musik"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2290.JPG",
+    "kategori": "wedding",
+    "judul_en": "Cultural Event Ceremony",
+    "judul_id": "Upacara Acara Budaya"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2636.JPG",
+    "kategori": "wedding",
+    "judul_en": "Traditional Dance Performance",
+    "judul_id": "Pertunjukan Tari Tradisional"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2695.JPG",
+    "kategori": "wedding",
+    "judul_en": "Birthday Gala Dinner",
+    "judul_id": "Makan Malam Gala Ulang Tahun"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2713.JPG",
+    "kategori": "wedding",
+    "judul_en": "Anniversary Celebration",
+    "judul_id": "Perayaan Ulang Tahun Pernikahan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2725.JPG",
+    "kategori": "wedding",
+    "judul_en": "Romantic Couple Portrait",
+    "judul_id": "Potret Romantis Pasangan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2778.JPG",
+    "kategori": "wedding",
+    "judul_en": "Pre-Wedding Beach Session",
+    "judul_id": "Sesi Pre-Wedding Pantai"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2970.JPG",
+    "kategori": "wedding",
+    "judul_en": "Intimate Wedding Ceremony",
+    "judul_id": "Upacara Pernikahan Intim"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX2994.JPG",
+    "kategori": "wedding",
+    "judul_en": "Outdoor Engagement Session",
+    "judul_id": "Sesi Pertunangan Outdoor"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Wedding/NIXX3029.JPG",
+    "kategori": "wedding",
+    "judul_en": "Bride Preparation Moments",
+    "judul_id": "Momen Persiapan Pengantin Wanita"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX3295.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Pre-Wedding Forest Concept",
+    "judul_id": "Konsep Pre-Wedding Hutan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX3299.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Casual Couple Shoot",
+    "judul_id": "Foto Kasual Pasangan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX4583.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Modern Wedding Reception",
+    "judul_id": "Resepsi Pernikahan Modern"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX4591.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Bride Walking Down the Aisle",
+    "judul_id": "Pengantin Berjalan Menuju Altar"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX4619.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Tears of Joy Wedding Moment",
+    "judul_id": "Momen Haru Pernikahan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX4629.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Wedding First Dance",
+    "judul_id": "Dansa Pertama Pernikahan"
+  },
+  {
+    "tipe_media": "gambar",
+    "sumber_media": "gallery-photo/Bali Ceremony/NIXX4650.jpg",
+    "kategori": "bali_ceremony",
+    "judul_en": "Wedding Send-off Celebration",
+    "judul_id": "Perayaan Akhir Pernikahan"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://www.instagram.com/reel/DMhcOZfSZUE/embed/",
+    "cover_image": "gallery-video-thumb/video1.jpg",
+    "judul_en": "Mingboyy Portrait Session",
+    "judul_id": "Sesi Potret Mingboyy"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://www.instagram.com/reel/DJ0hZRVyOzc/embed/",
+    "cover_image": "gallery-video-thumb/video2.jpg",
+    "judul_en": "Mingboyy Travel Reel",
+    "judul_id": "Mingboyy Perjalanan Reel"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://www.instagram.com/reel/DIP4TYSS1hB/embed/",
+    "cover_image": "gallery-video-thumb/video3.jpg",
+    "judul_en": "Mingboyy Drone Highlights",
+    "judul_id": "Sorotan Drone Mingboyy"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://www.instagram.com/reel/DJLr3r-SqKT/embed/",
+    "cover_image": "gallery-video-thumb/video4.jpg",
+    "judul_en": "Mingboyy Wedding Cinematic",
+    "judul_id": "Sinematik Pernikahan Mingboyy"
+  }
+]
