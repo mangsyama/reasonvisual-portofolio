@@ -631,9 +631,8 @@
             </div>
           </div>
           <!-- Instagram Badge -->
-          <div class="absolute top-2.5 right-2.5 z-20 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold flex items-center gap-1.5 shadow-sm">
+          <div class="absolute top-2.5 right-2.5 z-20 w-7 h-7 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
             <i class="fa-brands fa-instagram text-xs text-pink-400"></i>
-            <span>Reels</span>
           </div>
         </div>
       </div>
