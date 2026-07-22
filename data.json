@@ -376,5 +376,12 @@
     "cover_image": "gallery-video-thumb/video4.jpg",
     "judul_en": "Mingboyy Wedding Cinematic",
     "judul_id": "Sinematik Pernikahan Mingboyy"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://www.instagram.com/reel/Dac0f_eJds4/",
+    "cover_image": "gallery-video-thumb/video5.jpg",
+    "judul_en": "ReasonVisual Drone & Cinematic Reel",
+    "judul_id": "Reel Sinematik & Drone ReasonVisual"
   }
 ]

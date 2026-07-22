@@ -16,24 +16,29 @@
 
   const PACKAGES = {
     silver_drone: {
-      name_en: "Silver - Drone Video Only",
-      name_id: "Silver - Video Drone Only",
+      name_en: "Silver A - Drone Video Only",
+      name_id: "Silver A - Video Drone Only",
       price: "Rp 999.000"
     },
     silver_photo: {
-      name_en: "Silver - Photo Documentation Only",
-      name_id: "Silver - Foto Dokumentasi Only",
+      name_en: "Silver B - Photo Only",
+      name_id: "Silver B - Photo Only",
       price: "Rp 1.499.000"
     },
+    gold: {
+      name_en: "Gold - Complete Video Documentation",
+      name_id: "Gold - Complete Video Documentation",
+      price: "Rp 1.999.000"
+    },
     premium: {
-      name_en: "Premium Package",
-      name_id: "Premium Package",
+      name_en: "Premium - All-In Documentation",
+      name_id: "Premium - All-In Documentation",
       price: "Rp 2.999.000"
     },
-    gold: {
-      name_en: "Gold Package",
-      name_id: "Gold Package",
-      price: "Rp 1.999.000"
+    drone_property: {
+      name_en: "Drone Property Photo Only (B2B)",
+      name_id: "Drone Property Photo Only (B2B)",
+      price: "Rp 500.000 - Rp 750.000"
     }
   };
 
@@ -57,35 +62,53 @@
       tag_graduation: "Graduation",
       tag_drone: "Drone",
       tag_cinematic: "Cinematic",
+      tag_property: "Villa & Property",
       tag_others: "Others",
       tag_more: "& More",
       about_title: "About Us",
-      about_p1: "ReasonVisual is a professional documentation team providing photo, video, and drone shoot services for various needs — ranging from wedding, pre-wedding, event, travel, company profile, graduation, to other custom documentation needs according to your requests.",
+      about_p1: "ReasonVisual is a professional documentation team providing photo, video, and drone shoot services for various needs — ranging from wedding, pre-wedding, event, travel, company profile, graduation, to villa & property commercial documentations.",
       about_p2: "We believe that every moment has a story worth capturing. With modern equipment and a creative eye, we turn ordinary moments into memorable visual works that can be cherished forever.",
       stats_projects: "Completed Projects",
       stats_clients: "Satisfied Clients",
       stats_experience: "Years of Experience",
       price_eyebrow: "Package Price List",
       price_title: "Choose Documentation Package",
-      price_subtitle: "Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company, Graduation & other documentations.",
-      price_silver_desc: "Budget-friendly option for specific documentation needs.",
-      price_drone_only: "Drone Video Only",
-      price_no_edit: "No Edit",
-      price_photo_only: "Photo Documentation Only",
+      price_subtitle: "Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company, Villa & Property documentations.",
+      price_silver_desc: "Budget-friendly entry options for specific photo or drone video needs.",
+      price_drone_only: "Silver A: Drone Video Only",
+      price_drone_desc: "1 Hour Flight (Maximum 2 Batteries) • RAW Clips 4K/1080p • Drive Link",
+      price_photo_only: "Silver B: Photo Only",
+      price_photo_desc: "1 Pro Photographer • Maximum 6 Hours Location Coverage • All Edited (Color Graded) + Original RAW/JPEG Access",
       price_btn_silver: "Choose Silver",
       price_btn_silver_drone: "Choose Drone Only",
       price_btn_silver_photo: "Choose Photo Only",
       price_best_value: "Best Value",
-      price_best_complete: "Best complete package",
-      price_feature_photo_video: "Photo & Video Documentation",
-      price_feature_drone: "Drone Shoot",
-      price_feature_all_files: "All Edited & Raw Files",
-      price_feature_flashdisk: "Flash Drive",
-      price_btn_premium: "Choose Premium",
-      price_video_complete: "Complete video documentation",
-      price_feature_video_doc: "Video Documentation",
-      price_feature_all_edited: "All Edited Files",
+      price_gold_title: "Gold: Complete Video Documentation",
+      price_gold_desc: "Integrated video & drone documentation package for high engagement.",
+      price_gold_f1: "1 Videographer + 1 Drone Pilot (Combined)",
+      price_gold_f2: "1 Main Video / Cinematic Highlight (Duration 2–3 Minutes)",
+      price_gold_f3: "Bonus: 1 Vertical Short Video (Reels / TikTok / Shorts 30–60 Seconds)",
+      price_gold_f4: "Full Editing, Sound Design & Licensed Music",
+      price_gold_f5: "Delivery via Google Drive Link",
       price_btn_gold: "Choose Gold",
+      price_premium_title: "Premium: All-In Documentation",
+      price_premium_desc: "The ultimate flagship coverage with complete media deliverables.",
+      price_premium_f1: "Full Team: 1 Photographer + 1 Videographer + 1 Drone Pilot",
+      price_premium_f2: "Half Day Coverage (6 Hours Location Coverage)",
+      price_premium_f3: "Output: All Edited Photos + 1 Main Video + 1 Shorts Video",
+      price_premium_f4: "Value Booster: Bonus 1 Exclusive Flash Drive + Google Drive Link",
+      price_btn_premium: "Choose Premium",
+      price_b2b_tag: "Villa & Property Segment",
+      price_b2b_title: "Drone Property Photo Only",
+      price_b2b_subtitle: "High-impact visual perspective crafted specifically for Airbnb, Booking.com, & Instagram commercial promotion.",
+      price_b2b_price: "Rp 500.000 – Rp 750.000",
+      price_b2b_f1: "Dedicated aerial photoshoot for exterior, landscape & architectural angles",
+      price_b2b_f2: "1 Hour Flight Session (Maximum 2 Batteries)",
+      price_b2b_f3: "10–15 High Resolution Aerial Shots",
+      price_b2b_f4: "Advanced Property Editing (Sky Replacement & Architectural Color Grading)",
+      price_b2b_f5: "Commercial Digital Use License Included",
+      price_b2b_f6: "Fast Delivery via Google Drive Link",
+      price_btn_b2b: "Choose Property Package",
       gallery_eyebrow: "Portfolio",
       gallery_title: "Gallery",
       gallery_desc: "Our documentation collection from various wedding, event, travel, and corporate projects.",
@@ -131,35 +154,53 @@
       tag_graduation: "Wisuda",
       tag_drone: "Drone",
       tag_cinematic: "Cinematic",
+      tag_property: "Villa & Properti",
       tag_others: "Lainnya",
       tag_more: "& Lainnya",
       about_title: "Tentang Kami",
-      about_p1: "ReasonVisual adalah tim dokumentasi profesional yang menghadirkan layanan foto, video, dan drone shoot untuk berbagai kebutuhan — mulai dari wedding, pre-wedding, event, travel, company profile, wisuda, hingga berbagai jenis dokumentasi lainnya sesuai kebutuhan Anda.",
+      about_p1: "ReasonVisual adalah tim dokumentasi profesional yang menghadirkan layanan foto, video, dan drone shoot untuk berbagai kebutuhan — mulai dari wedding, pre-wedding, event, travel, company profile, wisuda, hingga dokumentasi komersial villa & properti.",
       about_p2: "Kami percaya bahwa setiap momen memiliki cerita yang layak diabadikan. Dengan peralatan modern dan mata kreatif, kami mengubah momen biasa menjadi karya visual yang berkesan dan bisa dikenang selamanya.",
       stats_projects: "Proyek Selesai",
       stats_clients: "Klien Puas",
       stats_experience: "Tahun Pengalaman",
       price_eyebrow: "Package Price List",
       price_title: "Pilih Paket Dokumentasi",
-      price_subtitle: "Layanan dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company, Wisuda & dokumentasi lainnya.",
-      price_silver_desc: "Pilihan hemat untuk kebutuhan dokumentasi spesifik.",
-      price_drone_only: "Video Drone Only",
-      price_no_edit: "No Edit",
-      price_photo_only: "Foto Documentation Only",
+      price_subtitle: "Layanan dokumentasi profesional untuk Wedding, Pre-Wedding, Event, Travel, Company, Wisuda, Villa & Properti.",
+      price_silver_desc: "Pilihan fleksibel untuk kebutuhan spesifik foto atau video drone.",
+      price_drone_only: "Silver A: Video Drone Only",
+      price_drone_desc: "1 Jam Terbang (Maksimal 2 Baterai) • RAW Clips 4K/1080p • Drive Link",
+      price_photo_only: "Silver B: Photo Only",
+      price_photo_desc: "1 Fotografer Profesional • Durasi Maksimal 6 Jam di Lokasi • All Foto Edited (Color Graded) + Akses Foto Asli (RAW/JPEG)",
       price_btn_silver: "Pilih Silver",
       price_btn_silver_drone: "Pilih Video Drone Only",
-      price_btn_silver_photo: "Pilih Foto Only",
+      price_btn_silver_photo: "Pilih Photo Only",
       price_best_value: "Best Value",
-      price_best_complete: "Paket lengkap terbaik",
-      price_feature_photo_video: "Foto & Video Documentation",
-      price_feature_drone: "Shoot Drone",
-      price_feature_all_files: "All File Edit dan Mentah",
-      price_feature_flashdisk: "Flash Disk",
-      price_btn_premium: "Pilih Premium",
-      price_video_complete: "Dokumentasi video lengkap",
-      price_feature_video_doc: "Video Documentation",
-      price_feature_all_edited: "All File Edit",
+      price_gold_title: "Gold: Complete Video Documentation",
+      price_gold_desc: "Paket dokumentasi video & drone sinematik terintegrasi.",
+      price_gold_f1: "1 Videografer + 1 Pilot Drone (Kombinasi)",
+      price_gold_f2: "1 Video Utama / Cinematic Highlight (Durasi 2–3 Menit)",
+      price_gold_f3: "Bonus: 1 Video Pendek Vertikal (Reels / TikTok / Shorts 30–60 Detik)",
+      price_gold_f4: "Proses Editing Penuh, Penataan Suara (Sound Design) & Musik Berlisensi Resmi",
+      price_gold_f5: "Pengiriman File via Google Drive Link",
       price_btn_gold: "Pilih Gold",
+      price_premium_title: "Premium: All-In Documentation",
+      price_premium_desc: "Paket dokumentasi terlengkap dengan benefit fisik & digital eksklusif.",
+      price_premium_f1: "Tim Lengkap: 1 Fotografer + 1 Videografer + 1 Pilot Drone",
+      price_premium_f2: "Half Day Coverage (6 Jam Kerja di Lokasi)",
+      price_premium_f3: "Output: All Foto (Edited Color Graded) + 1 Video Liputan Utama + 1 Video Shorts",
+      price_premium_f4: "Value Booster: Bonus 1 Flashdisk Eksklusif + Akses Link Google Drive",
+      price_btn_premium: "Pilih Premium",
+      price_b2b_tag: "Segmen Villa & Properti",
+      price_b2b_title: "Drone Property Photo Only",
+      price_b2b_subtitle: "Estetika sudut pandang komersial khusus untuk kebutuhan promosi listing Airbnb, Booking.com, & Instagram.",
+      price_b2b_price: "Rp 500.000 – Rp 750.000",
+      price_b2b_f1: "Sesi foto udara khusus eksterior, lanskap & arsitektur bangunan luar",
+      price_b2b_f2: "1 Jam Sesi Penerbangan (Flight Time / Maksimal 2 Baterai)",
+      price_b2b_f3: "10–15 Foto Udara Resolusi Tinggi (High Resolution Aerial Shots)",
+      price_b2b_f4: "Advanced Editing: Edit tingkat lanjut properti (Sky Replacement & Penajaman Warna Bangunan)",
+      price_b2b_f5: "Termasuk Hak Lisensi Penggunaan Komersial Digital (Commercial Use License)",
+      price_b2b_f6: "Pengiriman via Google Drive Link",
+      price_btn_b2b: "Pilih Paket Properti",
       gallery_eyebrow: "Portofolio",
       gallery_title: "Gallery",
       gallery_desc: "Koleksi hasil dokumentasi kami dari berbagai proyek wedding, event, travel, dan company.",
@@ -224,10 +265,6 @@
   const lightboxBox = $('#lightbox-box');
   const lightboxImg = $('#lightbox-img');
   const lightboxClose = $('#lightbox-close');
-  const lightboxVideoContainer = $('#lightbox-video-container');
-  const lightboxIframe = $('#lightbox-iframe');
-  const lightboxInstagramContainer = $('#lightbox-instagram-container');
-  const lightboxInstagramContent = $('#lightbox-instagram-content');
 
   // ─── THEME ────────────────────────────────────────────────────
 
@@ -575,8 +612,9 @@
   function videoCard(item) {
     const title = currentLang === 'en' ? item.judul_en : item.judul_id;
     const coverSrc = item.cover_image ? item.cover_image : 'gallery-photo-thumb/DSC01482.JPG';
+    const cleanUrl = item.sumber_media.replace('/embed/', '/');
     return `
-      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${item.sumber_media}" data-alt="${title}">
+      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${cleanUrl}" data-alt="${title}">
         <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
           <img
             src="${getImageSrc(coverSrc)}"
@@ -586,11 +624,16 @@
             onload="this.style.opacity='1'; this.parentElement.classList.remove('skeleton');"
             onerror="this.style.display='none';"
           />
-          <!-- Play Button Overlay -->
+          <!-- Play Overlay -->
           <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/25 group-hover:bg-black/40 transition-colors duration-300">
             <div class="w-12 h-12 flex items-center justify-center rounded-full bg-white/25 backdrop-blur-md text-white border border-white/30 transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-              <i class="fa-solid fa-play text-lg ml-0.5"></i>
+              <i class="fa-solid fa-play text-base ml-0.5"></i>
             </div>
+          </div>
+          <!-- Instagram Badge -->
+          <div class="absolute top-2.5 right-2.5 z-20 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20 text-[10px] font-semibold flex items-center gap-1.5 shadow-sm">
+            <i class="fa-brands fa-instagram text-xs text-pink-400"></i>
+            <span>Reels</span>
           </div>
         </div>
       </div>
@@ -738,8 +781,8 @@
     }
   }
 
-  function openLightbox(src, type, alt) {
-    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg || !lightboxVideoContainer || !lightboxIframe || !lightboxInstagramContainer || !lightboxInstagramContent) return;
+  function openLightbox(src, alt) {
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg) return;
 
     isLightboxOpen = true;
 
@@ -748,46 +791,8 @@
       galleryRotationInterval = null;
     }
 
-    // Hide everything first
-    lightboxImg.classList.add('hidden');
-    lightboxVideoContainer.classList.add('hidden');
-    lightboxInstagramContainer.classList.add('hidden');
-
-    const isInstagram = src.includes('instagram.com');
-
-    if (type === 'gambar') {
-      lightboxImg.classList.remove('hidden');
-      lightboxImg.src = src;
-      lightboxImg.alt = alt;
-    } else if (type === 'video') {
-      if (isInstagram) {
-        lightboxInstagramContainer.classList.remove('hidden');
-        
-        // Clean URL to base post URL
-        const permalink = src.replace('/embed/', '/');
-        
-        lightboxInstagramContent.innerHTML = `
-          <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:12px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);">
-            <div class="flex flex-col items-center justify-center py-24 text-sand-400 gap-3">
-              <i class="fa-solid fa-circle-notch animate-spin text-3xl text-accent"></i>
-              <span class="text-xs font-semibold tracking-wider text-sand-500 uppercase">Loading Instagram Post...</span>
-            </div>
-          </blockquote>
-        `;
-
-        if (window.instgrm) {
-          window.instgrm.Embeds.process();
-        } else {
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = "//www.instagram.com/embed.js";
-          document.body.appendChild(script);
-        }
-      } else {
-        lightboxVideoContainer.classList.remove('hidden');
-        lightboxIframe.src = src;
-      }
-    }
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
 
     lightboxModal.classList.remove('hidden');
     lightboxModal.classList.add('flex');
@@ -803,7 +808,7 @@
   }
 
   function closeLightbox() {
-    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg || !lightboxIframe || !lightboxVideoContainer || !lightboxInstagramContainer || !lightboxInstagramContent) return;
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg) return;
 
     lightboxBackdrop.classList.remove('opacity-100');
     lightboxBackdrop.classList.add('opacity-0');
@@ -815,13 +820,6 @@
       lightboxModal.classList.remove('flex');
       
       lightboxImg.src = '';
-      lightboxIframe.src = '';
-      lightboxInstagramContent.innerHTML = '';
-      
-      lightboxImg.classList.add('hidden');
-      lightboxVideoContainer.classList.add('hidden');
-      lightboxInstagramContainer.classList.add('hidden');
-
       isLightboxOpen = false;
 
       const activeBtn = $('.gallery-filter-btn.bg-accent');
@@ -842,8 +840,13 @@
         const src = card.getAttribute('data-src');
         const alt = card.getAttribute('data-alt') || '';
 
-        if (src && type) {
-          openLightbox(src, type, alt);
+        if (src) {
+          if (type === 'video') {
+            const cleanUrl = src.replace('/embed/', '/');
+            window.open(cleanUrl, '_blank', 'noopener,noreferrer');
+          } else {
+            openLightbox(src, alt);
+          }
         }
       });
     }

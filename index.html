@@ -433,121 +433,191 @@
         <span data-i18n="tag_travel" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Travel</span>
         <span data-i18n="tag_company" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Company</span>
         <span data-i18n="tag_graduation" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Graduation</span>
+        <span data-i18n="tag_property" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Villa & Properti</span>
         <span data-i18n="tag_others" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Others</span>
       </div>
 
-      <!-- Price Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+      <!-- Price Cards Grid (Main Tiered Packages) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
 
         <!-- SILVER -->
-        <div class="reveal price-card order-3 md:order-1 rounded-2xl border border-sand-200 dark:border-sand-800 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col" style="transition-delay:0.05s">
-          <div class="mb-6">
-            <span class="inline-block px-3 py-1 bg-sand-200 dark:bg-sand-800 text-sand-600 dark:text-sand-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Silver</span>
-            <p data-i18n="price_silver_desc" class="text-sand-500 text-sm leading-relaxed">Budget-friendly option for specific documentation needs.</p>
-          </div>
+        <div class="reveal price-card order-1 rounded-2xl border-2 border-sand-300 dark:border-sand-700 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between" style="transition-delay:0.05s">
+          <div>
+            <div class="mb-6">
+              <span class="inline-block px-3 py-1 bg-sand-200 dark:bg-sand-800 text-sand-600 dark:text-sand-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-3">Silver</span>
+              <p data-i18n="price_silver_desc" class="text-sand-500 text-xs sm:text-sm leading-relaxed">Pilihan fleksibel untuk kebutuhan spesifik foto atau video drone.</p>
+            </div>
 
-          <div class="space-y-4 flex-1">
-            <!-- Option 1 -->
-            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
-              <div class="mb-3">
-                <div class="flex items-baseline justify-between mb-2">
-                  <span data-i18n="price_drone_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Drone Video Only</span>
-                  <span data-i18n="price_no_edit" class="text-xs text-sand-400">No Edit</span>
+            <div class="space-y-4">
+              <!-- Option A: Drone Video Only -->
+              <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
+                <div class="mb-3">
+                  <div class="flex items-baseline justify-between mb-1">
+                    <span data-i18n="price_drone_only" class="text-xs sm:text-sm font-semibold text-sand-900 dark:text-sand-100">Silver A: Video Drone Only</span>
+                  </div>
+                  <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100 mb-2">
+                    Rp 999.000
+                  </div>
+                  <p data-i18n="price_drone_desc" class="text-[11px] text-sand-500 leading-normal">1 Jam Terbang (Maksimal 2 Baterai) • RAW Clips 4K/1080p • Drive Link</p>
                 </div>
-                <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
-                  Rp 999<span class="text-base text-sand-400 font-sans">.000</span>
-                </div>
+                <button data-package="silver_drone" data-i18n="price_btn_silver_drone" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+                  Pilih Video Drone Only
+                </button>
               </div>
-              <button data-package="silver_drone" data-i18n="price_btn_silver_drone" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
-                Choose Drone Only
-              </button>
-            </div>
-            <!-- Option 2 -->
-            <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
-              <div class="mb-3">
-                <div class="mb-2">
-                  <span data-i18n="price_photo_only" class="text-sm font-semibold text-sand-900 dark:text-sand-100">Photo Documentation Only</span>
+
+              <!-- Option B: Photo Only -->
+              <div class="p-4 rounded-xl bg-sand-50 dark:bg-[#171717] border border-sand-200/60 dark:border-sand-800/60 flex flex-col justify-between">
+                <div class="mb-3">
+                  <div class="flex items-baseline justify-between mb-1">
+                    <span data-i18n="price_photo_only" class="text-xs sm:text-sm font-semibold text-sand-900 dark:text-sand-100">Silver B: Photo Only</span>
+                  </div>
+                  <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100 mb-2">
+                    Rp 1.499.000
+                  </div>
+                  <p data-i18n="price_photo_desc" class="text-[11px] text-sand-500 leading-normal">1 Fotografer • Maksimal 6 Jam Kerja • All Edited (Color Graded) + RAW/JPEG</p>
                 </div>
-                <div class="font-serif text-2xl font-medium text-sand-900 dark:text-sand-100">
-                  Rp 1.499<span class="text-base text-sand-400 font-sans">.000</span>
-                </div>
+                <button data-package="silver_photo" data-i18n="price_btn_silver_photo" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+                  Pilih Photo Only
+                </button>
               </div>
-              <button data-package="silver_photo" data-i18n="price_btn_silver_photo" class="block w-full text-center px-4 py-2 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
-                Choose Photo Only
-              </button>
             </div>
           </div>
-        </div>
-
-        <!-- PREMIUM (Featured) -->
-        <div class="reveal price-card price-card-featured order-1 md:order-2 rounded-2xl border-2 border-accent bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col relative" style="transition-delay:0.1s">
-          <!-- Badge -->
-          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-            <span data-i18n="price_best_value" class="px-4 py-1 bg-accent text-white text-[10px] font-bold tracking-[0.15em] uppercase rounded-full shadow-lg shadow-accent/20">Best Value</span>
-          </div>
-
-          <div class="mb-6 mt-2">
-            <span class="inline-block px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Premium</span>
-            <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
-              Rp 2.999<span class="text-xl text-sand-400 font-sans">.000</span>
-            </div>
-            <p data-i18n="price_best_complete" class="text-sand-500 text-sm">Best complete package</p>
-          </div>
-
-          <ul class="space-y-3 mb-8 flex-1">
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_photo_video" class="text-sm text-sand-700 dark:text-sand-300">Photo & Video Documentation</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_drone" class="text-sm text-sand-700 dark:text-sand-300">Drone Shoot</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_all_files" class="text-sm text-sand-700 dark:text-sand-300">All Edited & Raw Files</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_flashdisk" class="text-sm text-sand-700 dark:text-sand-300">Flash Drive</span>
-            </li>
-          </ul>
-
-          <button data-package="premium" data-i18n="price_btn_premium" class="block w-full text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-sm font-semibold rounded-full transition-colors">
-            Choose Premium
-          </button>
         </div>
 
         <!-- GOLD -->
-        <div class="reveal price-card order-2 md:order-3 rounded-2xl border border-sand-200 dark:border-sand-800 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col" style="transition-delay:0.15s">
-          <div class="mb-6">
-            <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-4">Gold</span>
-            <div class="font-serif text-4xl sm:text-5xl font-medium text-sand-900 dark:text-sand-100 mb-1">
-              Rp 1.999<span class="text-xl text-sand-400 font-sans">.000</span>
+        <div class="reveal price-card order-2 rounded-2xl border-2 border-amber-400/50 dark:border-amber-600/40 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between" style="transition-delay:0.1s">
+          <div>
+            <div class="mb-6">
+              <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-3">Gold</span>
+              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100 mb-1">
+                Rp 1.999.000
+              </div>
+              <h3 data-i18n="price_gold_title" class="font-semibold text-sm text-sand-900 dark:text-sand-100 mt-1 mb-1">Gold: Complete Video Documentation</h3>
+              <p data-i18n="price_gold_desc" class="text-sand-500 text-xs leading-relaxed">Paket dokumentasi video & drone sinematik terintegrasi.</p>
             </div>
-            <p data-i18n="price_video_complete" class="text-sand-500 text-sm">Complete video documentation</p>
+
+            <ul class="space-y-3 mb-8 text-xs text-sand-700 dark:text-sand-300">
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_gold_f1">1 Videografer + 1 Pilot Drone (Kombinasi)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_gold_f2">1 Video Utama / Cinematic Highlight (Durasi 2–3 Menit)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_gold_f3">Bonus: 1 Video Pendek Vertikal (Reels / TikTok / Shorts 30–60 Detik)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_gold_f4">Editing Penuh, Sound Design & Musik Berlisensi Resmi</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_gold_f5">Pengiriman File via Google Drive Link</span>
+              </li>
+            </ul>
           </div>
 
-          <ul class="space-y-3 mb-8 flex-1">
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_video_doc" class="text-sm text-sand-700 dark:text-sand-300">Video Documentation</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_drone" class="text-sm text-sand-700 dark:text-sand-300">Drone Shoot</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              <span data-i18n="price_feature_all_edited" class="text-sm text-sand-700 dark:text-sand-300">All Edited Files</span>
-            </li>
-          </ul>
-
-          <button data-package="gold" data-i18n="price_btn_gold" class="block w-full text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-sm font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
-            Choose Gold
+          <button data-package="gold" data-i18n="price_btn_gold" class="block w-full text-center px-6 py-3 border border-sand-300 dark:border-sand-700 text-sand-700 dark:text-sand-300 text-xs font-semibold rounded-full hover:bg-sand-100 dark:hover:bg-sand-800 transition-colors">
+            Pilih Gold
           </button>
         </div>
 
+        <!-- PREMIUM (Featured Flagship) -->
+        <div class="reveal price-card price-card-featured order-3 rounded-2xl border-2 border-accent bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between relative shadow-xl shadow-accent/5" style="transition-delay:0.15s">
+          <!-- Badge -->
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span data-i18n="price_best_value" class="px-4 py-1 bg-accent text-white text-[10px] font-bold tracking-[0.15em] uppercase rounded-full shadow-lg shadow-accent/20">Best Value / Flagship</span>
+          </div>
+
+          <div>
+            <div class="mb-6">
+              <span class="inline-block px-3 py-1 bg-accent/10 text-accent text-[10px] font-bold tracking-[0.2em] uppercase rounded-full mb-3">Premium</span>
+              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100 mb-1">
+                Rp 2.999.000
+              </div>
+              <h3 data-i18n="price_premium_title" class="font-semibold text-sm text-sand-900 dark:text-sand-100 mt-1 mb-1">Premium: All-In Documentation</h3>
+              <p data-i18n="price_premium_desc" class="text-sand-500 text-xs leading-relaxed">Paket dokumentasi terlengkap dengan benefit fisik & digital eksklusif.</p>
+            </div>
+
+            <ul class="space-y-3 mb-8 text-xs text-sand-700 dark:text-sand-300">
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_premium_f1">Tim Lengkap: 1 Fotografer + 1 Videografer + 1 Pilot Drone</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_premium_f2">Half Day Coverage (6 Jam Kerja di Lokasi)</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_premium_f3">Output: All Foto (Edited Color Graded) + 1 Video Liputan Utama + 1 Video Shorts</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_premium_f4">Value Booster: Bonus 1 Flashdisk Eksklusif + Link Google Drive</span>
+              </li>
+            </ul>
+          </div>
+
+          <button data-package="premium" data-i18n="price_btn_premium" class="block w-full text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-xs font-semibold rounded-full transition-colors shadow-md shadow-accent/15">
+            Pilih Premium
+          </button>
+        </div>
+
+      </div>
+
+      <!-- COMMERCIAL SEGMENT: VILLA & PROPERTI -->
+      <div class="reveal price-card max-w-6xl mx-auto rounded-2xl border-2 border-amber-400/40 dark:border-amber-600/30 bg-gradient-to-br from-white via-sand-50 to-amber-50/30 dark:from-[#1F1F1F] dark:via-[#1A1A1A] dark:to-[#262118] p-7 sm:p-10" style="transition-delay:0.2s">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-bold tracking-[0.15em] uppercase rounded-full mb-4">
+              <i class="fa-solid fa-building-user text-xs"></i>
+              <span data-i18n="price_b2b_tag">Segmen Villa & Properti</span>
+            </div>
+            <h3 data-i18n="price_b2b_title" class="font-serif text-2xl sm:text-3xl font-medium text-sand-900 dark:text-sand-100 mb-2">Drone Property Photo Only</h3>
+            <p data-i18n="price_b2b_subtitle" class="text-sand-600 dark:text-sand-400 text-xs sm:text-sm leading-relaxed mb-6">Estetika sudut pandang komersial khusus untuk kebutuhan promosi listing Airbnb, Booking.com, & Instagram.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-sand-700 dark:text-sand-300">
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f1">Foto udara eksterior, lanskap & arsitektur</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f2">1 Jam Sesi Penerbangan (Maksimal 2 Baterai)</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f3">10–15 Foto Udara Resolusi Tinggi (HR)</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f4">Sky Replacement & Edit Warna Properti</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f5">Hak Lisensi Penggunaan Komersial Digital</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span data-i18n="price_b2b_f6">Pengiriman via Link Google Drive</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-start lg:items-end justify-center lg:pl-8 border-t lg:border-t-0 lg:border-l border-sand-200 dark:border-sand-800 pt-6 lg:pt-0">
+            <div class="text-[11px] text-sand-400 uppercase tracking-widest font-semibold mb-1">Investasi Layanan</div>
+            <div data-i18n="price_b2b_price" class="font-serif text-2xl sm:text-3xl font-medium text-amber-700 dark:text-amber-400 mb-5 whitespace-nowrap">
+              Rp 500.000 – Rp 750.000
+            </div>
+            <button data-package="drone_property" data-i18n="price_btn_b2b" class="w-full lg:w-auto px-7 py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-full transition-colors shadow-md shadow-amber-600/20 whitespace-nowrap">
+              Pilih Paket Properti
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -763,17 +833,7 @@
     <!-- Lightbox Box -->
     <div id="lightbox-box" class="relative z-10 max-w-5xl w-full h-full max-h-[85vh] flex items-center justify-center transform scale-95 opacity-0 transition-all duration-300 pointer-events-none">
       <!-- For Images -->
-      <img id="lightbox-img" src="" alt="" class="hidden max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none pointer-events-auto" />
-      
-      <!-- For Videos (YouTube / Instagram) -->
-      <div id="lightbox-video-container" class="hidden w-full max-w-[800px] aspect-video bg-black rounded-lg overflow-hidden shadow-2xl pointer-events-auto">
-        <iframe id="lightbox-iframe" src="" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
-
-      <!-- For Instagram Blockquote Embeds -->
-      <div id="lightbox-instagram-container" class="hidden w-full max-w-[450px] max-h-[80vh] overflow-y-auto bg-white rounded-xl shadow-2xl pointer-events-auto p-1.5">
-        <div id="lightbox-instagram-content"></div>
-      </div>
+      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none pointer-events-auto" />
     </div>
   </div>
 
