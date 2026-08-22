@@ -246,8 +246,8 @@
   const navbar = $('#navbar');
   const mobileMenuBtn = $('#mobile-menu-btn');
   const mobileMenu = $('#mobile-menu');
-  const themeToggle = $('#theme-toggle');
-  const langToggle = $('#lang-toggle');
+  const themeToggles = $$('.theme-toggle');
+  const langToggles = $$('.lang-toggle');
   const yearSpan = $('#current-year');
   const ctaWa = $('#cta-whatsapp');
 
@@ -279,9 +279,10 @@
   }
 
   function setupThemeToggle() {
-    if (!themeToggle) return;
-    themeToggle.addEventListener('click', () => {
-      applyTheme(!document.documentElement.classList.contains('dark'));
+    themeToggles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        applyTheme(!document.documentElement.classList.contains('dark'));
+      });
     });
   }
 
@@ -292,10 +293,10 @@
     document.documentElement.lang = lang;
     localStorage.setItem('rv-lang', lang);
 
-    // Update switcher button label
-    if (langToggle) {
-      langToggle.innerHTML = `<i class="fa-solid fa-language text-sm"></i><span>${lang.toUpperCase()}</span>`;
-    }
+    // Update all switcher button labels
+    langToggles.forEach((btn) => {
+      btn.innerHTML = `<i class="fa-solid fa-language text-sm"></i><span>${lang.toUpperCase()}</span>`;
+    });
 
     // Set page title & SEO description
     document.title = lang === 'en' ? 'ReasonVisual - Documentation Services' : 'ReasonVisual - Jasa Dokumentasi';
@@ -322,9 +323,10 @@
   }
 
   function setupLangToggle() {
-    if (!langToggle) return;
-    langToggle.addEventListener('click', () => {
-      setLanguage(currentLang === 'en' ? 'id' : 'en');
+    langToggles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setLanguage(currentLang === 'en' ? 'id' : 'en');
+      });
     });
   }
 
@@ -363,9 +365,22 @@
 
   // ─── MOBILE MENU ──────────────────────────────────────────────
 
+  function closeMobileMenu() {
+    if (!mobileMenu || !mobileMenu.classList.contains('menu-open')) return;
+    mobileMenu.classList.remove('menu-open');
+    if (navbar) navbar.classList.remove('mobile-open');
+    if (mobileMenuBtn) {
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      mobileMenuBtn.querySelectorAll('span').forEach((b) => {
+        b.style.transform = ''; b.style.opacity = '';
+      });
+    }
+  }
+
   function setupMobileMenu() {
     if (!mobileMenuBtn || !mobileMenu) return;
-    mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const open = mobileMenu.classList.toggle('menu-open');
       if (navbar) navbar.classList.toggle('mobile-open', open);
       mobileMenuBtn.setAttribute('aria-expanded', String(open));
@@ -378,15 +393,26 @@
         bars.forEach((b) => { b.style.transform = ''; b.style.opacity = ''; });
       }
     });
+
+    // Close when clicking nav links
     $$('.mobile-nav-link').forEach((l) => {
-      l.addEventListener('click', () => {
-        mobileMenu.classList.remove('menu-open');
-        if (navbar) navbar.classList.remove('mobile-open');
-        mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        mobileMenuBtn.querySelectorAll('span').forEach((b) => {
-          b.style.transform = ''; b.style.opacity = '';
-        });
-      });
+      l.addEventListener('click', closeMobileMenu);
+    });
+
+    // Close when clicking outside of mobile menu & button
+    document.addEventListener('click', (e) => {
+      if (
+        mobileMenu.classList.contains('menu-open') &&
+        !mobileMenu.contains(e.target) &&
+        !mobileMenuBtn.contains(e.target)
+      ) {
+        closeMobileMenu();
+      }
+    });
+
+    // Close when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
     });
   }
 

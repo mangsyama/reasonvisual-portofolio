@@ -57,12 +57,6 @@
       transition: background-color 0.4s ease, color 0.4s ease;
     }
 
-    /* ── Scrollbar ─────────────────────────── */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #C4BAA6; border-radius: 99px; }
-    .dark ::-webkit-scrollbar-thumb { background: #4A4235; }
-
     /* ── Hero cover ────────────────────────── */
     .hero-cover {
       position: relative;
@@ -89,6 +83,7 @@
       object-position: center;
       transform: none !important;
       transition: none !important;
+      animation: none !important;
       will-change: auto;
     }
 
@@ -105,12 +100,20 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
-    /* Navbar styles when at the top (transparent over dark hero image) */
-    #navbar:not(.scrolled):not(.mobile-open) {
-      background-color: transparent;
-      box-shadow: none;
+    /* ── Nav Logo & Brand ───────────────────── */
+    .nav-brand-logo {
+      filter: brightness(1);
+      transition: filter 0.35s ease, opacity 0.2s ease;
     }
-    #navbar:not(.scrolled):not(.mobile-open) a.font-serif {
+    html:not(.dark) #navbar.scrolled .nav-brand-logo,
+    html:not(.dark) #navbar.mobile-open .nav-brand-logo {
+      filter: brightness(0.15);
+    }
+    .dark .nav-brand-logo,
+    #navbar:not(.scrolled):not(.mobile-open) .nav-brand-logo {
+      filter: brightness(1);
+    }
+    #navbar:not(.scrolled):not(.mobile-open) .nav-brand-text {
       color: #ffffff !important;
     }
     #navbar:not(.scrolled):not(.mobile-open) .nav-link {
@@ -130,7 +133,7 @@
     #navbar:not(.scrolled):not(.mobile-open) .theme-toggle {
       background-color: rgba(255, 255, 255, 0.15) !important;
     }
-    #navbar:not(.scrolled):not(.mobile-open) #lang-toggle {
+    #navbar:not(.scrolled):not(.mobile-open) .lang-toggle {
       background-color: rgba(255, 255, 255, 0.15) !important;
       color: #ffffff !important;
     }
@@ -167,7 +170,7 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
-    #mobile-menu.menu-open { max-height: 360px; opacity: 1; }
+    #mobile-menu.menu-open { max-height: 440px; opacity: 1; }
     #mobile-menu-btn span {
       display: block; width: 18px; height: 1.5px;
       border-radius: 2px; transition: all 0.3s ease;
@@ -279,8 +282,11 @@
   <nav id="navbar" class="fixed top-0 inset-x-0 z-50">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
       <div class="flex items-center justify-between h-16 lg:h-[72px]">
-        <a href="#home" class="font-serif text-lg sm:text-xl font-semibold tracking-tight text-sand-900 dark:text-sand-100">
-          Reason<span class="text-accent">Visual</span>
+        <a href="#home" class="flex items-center gap-2.5 sm:gap-3 py-1 select-none hover:opacity-90 transition-opacity" aria-label="ReasonVisual Home">
+          <img src="assets/images/logo.png" alt="ReasonVisual Logo" class="nav-brand-logo h-7 sm:h-8 lg:h-9 w-auto object-contain" />
+          <span class="nav-brand-text font-serif text-lg sm:text-xl font-normal tracking-tight text-sand-900 dark:text-sand-100 transition-colors">
+            ReasonVisual
+          </span>
         </a>
         <div class="hidden md:flex items-center gap-8">
           <a href="#home" data-i18n="nav_home" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Home</a>
@@ -290,15 +296,19 @@
           <a href="#contact" data-i18n="nav_contact" class="nav-link text-[13px] font-medium text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 tracking-wide">Contact</a>
         </div>
         <div class="flex items-center gap-3">
-          <button id="lang-toggle" class="h-[26px] px-3 rounded-full bg-sand-200 dark:bg-sand-800 text-sand-900 dark:text-sand-100 flex items-center justify-center gap-1.5 hover:opacity-80 transition-opacity font-semibold text-xs tracking-wider" aria-label="Switch Language">
-            <i class="fa-solid fa-language text-sm"></i><span>EN</span>
-          </button>
-          <button id="theme-toggle" class="theme-toggle bg-sand-200 dark:bg-sand-800" aria-label="Toggle dark mode">
-            <div class="toggle-dot bg-white dark:bg-sand-300 flex items-center justify-center">
-              <svg class="w-3 h-3 text-amber-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
-              <svg class="w-3 h-3 text-sand-800 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-            </div>
-          </button>
+          <!-- Desktop Language & Theme Toggles -->
+          <div class="hidden md:flex items-center gap-3">
+            <button class="lang-toggle h-[26px] px-3 rounded-full bg-sand-200 dark:bg-sand-800 text-sand-900 dark:text-sand-100 flex items-center justify-center gap-1.5 hover:opacity-80 transition-opacity font-semibold text-xs tracking-wider" aria-label="Switch Language">
+              <i class="fa-solid fa-language text-sm"></i><span>EN</span>
+            </button>
+            <button class="theme-toggle bg-sand-200 dark:bg-sand-800" aria-label="Toggle dark mode">
+              <div class="toggle-dot bg-white dark:bg-sand-300 flex items-center justify-center">
+                <svg class="w-3 h-3 text-amber-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                <svg class="w-3 h-3 text-sand-800 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+              </div>
+            </button>
+          </div>
+          <!-- Mobile Menu Button -->
           <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Menu" aria-expanded="false">
             <span class="bg-sand-700 dark:bg-sand-300"></span>
             <span class="bg-sand-700 dark:bg-sand-300"></span>
@@ -306,13 +316,27 @@
           </button>
         </div>
       </div>
+      <!-- Mobile Menu Dropdown -->
       <div id="mobile-menu">
         <div class="px-5 py-4 pb-5 space-y-2 text-center">
-          <a href="#home" data-i18n="nav_home" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Home</a>
-          <a href="#about" data-i18n="nav_about" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">About</a>
-          <a href="#pricelist" data-i18n="nav_pricelist" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Price List</a>
-          <a href="#gallery" data-i18n="nav_gallery" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Gallery</a>
-          <a href="#contact" data-i18n="nav_contact" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg">Contact</a>
+          <a href="#home" data-i18n="nav_home" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg transition-colors font-medium">Home</a>
+          <a href="#about" data-i18n="nav_about" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg transition-colors font-medium">About</a>
+          <a href="#pricelist" data-i18n="nav_pricelist" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg transition-colors font-medium">Price List</a>
+          <a href="#gallery" data-i18n="nav_gallery" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg transition-colors font-medium">Gallery</a>
+          <a href="#contact" data-i18n="nav_contact" class="mobile-nav-link block px-3 py-2 text-sm text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-sand-100 rounded-lg transition-colors font-medium">Contact</a>
+
+          <!-- Mobile Controls (Language & Theme) -->
+          <div class="pt-3.5 mt-2 border-t border-sand-200/70 dark:border-sand-800/70 flex items-center justify-center gap-4">
+            <button class="lang-toggle h-8 px-3.5 rounded-full bg-sand-200/80 dark:bg-sand-800/80 text-sand-900 dark:text-sand-100 flex items-center justify-center gap-1.5 hover:opacity-80 transition-opacity font-semibold text-xs tracking-wider" aria-label="Switch Language">
+              <i class="fa-solid fa-language text-sm"></i><span>EN</span>
+            </button>
+            <button class="theme-toggle bg-sand-200/80 dark:bg-sand-800/80" aria-label="Toggle dark mode">
+              <div class="toggle-dot bg-white dark:bg-sand-300 flex items-center justify-center">
+                <svg class="w-3 h-3 text-amber-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                <svg class="w-3 h-3 text-sand-800 hidden dark:block" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
