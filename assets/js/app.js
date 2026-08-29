@@ -231,6 +231,7 @@
   };
 
   let currentLang = localStorage.getItem('rv-lang') || 'en';
+  const GALLERY_ROTATION_MS = 5000; // 5 seconds per rotation
   let galleryRotationInterval = null;
   let activeGallerySubset = [];
   let nextGallerySubset = [];
@@ -786,7 +787,7 @@
           nextGallerySubset = getRandomSubset(filtered, 8);
           preloadImages(nextGallerySubset);
         }
-      }, 10000);
+      }, GALLERY_ROTATION_MS);
     }
   }
 
@@ -825,7 +826,7 @@
           nextGallerySubset = getRandomSubset(filtered, 8);
           preloadImages(nextGallerySubset);
         }
-      }, 10000);
+      }, GALLERY_ROTATION_MS);
     }
   }
 
