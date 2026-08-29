@@ -264,6 +264,8 @@
   const lightboxBackdrop = $('#lightbox-backdrop');
   const lightboxBox = $('#lightbox-box');
   const lightboxImg = $('#lightbox-img');
+  const lightboxVideoContainer = $('#lightbox-video-container');
+  const lightboxIframe = $('#lightbox-iframe');
   const lightboxClose = $('#lightbox-close');
 
   // ─── THEME ────────────────────────────────────────────────────
@@ -635,9 +637,32 @@
     `;
   }
 
+  function getYouTubeId(url) {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  }
+
   function videoCard(item) {
     const title = currentLang === 'en' ? item.judul_en : item.judul_id;
-    const coverSrc = item.cover_image ? item.cover_image : 'gallery-photo-thumb/DSC01482.JPG';
+    const isYouTube = item.sumber_media.includes('youtube.com') || item.sumber_media.includes('youtu.be');
+    const isInstagram = item.sumber_media.includes('instagram.com');
+
+    let badgeIcon = '<i class="fa-solid fa-play text-xs text-white"></i>';
+    if (isYouTube) {
+      badgeIcon = '<i class="fa-brands fa-youtube text-xs text-white"></i>';
+    } else if (isInstagram) {
+      badgeIcon = '<i class="fa-brands fa-instagram text-xs text-white"></i>';
+    }
+
+    let coverSrc = item.cover_image;
+    if (!coverSrc && isYouTube) {
+      const ytId = getYouTubeId(item.sumber_media);
+      if (ytId) coverSrc = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+    }
+    if (!coverSrc) coverSrc = 'gallery-photo-thumb/DSC01482.JPG';
+
     const cleanUrl = item.sumber_media.replace('/embed/', '/');
     return `
       <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${cleanUrl}" data-alt="${title}">
@@ -650,15 +675,13 @@
             onload="this.style.opacity='1'; this.parentElement.classList.remove('skeleton');"
             onerror="this.style.display='none';"
           />
-          <!-- Play Overlay -->
-          <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/25 group-hover:bg-black/40 transition-colors duration-300">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-white/25 backdrop-blur-md text-white border border-white/30 transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-              <i class="fa-solid fa-play text-base ml-0.5"></i>
-            </div>
+          <!-- Play Overlay (Centered Play Icon with Smooth Diffused Shadow) -->
+          <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/15 group-hover:bg-black/30 transition-colors duration-300 pointer-events-none">
+            <i class="fa-solid fa-play text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] transform group-hover:scale-110 transition-transform duration-300 ml-0.5 sm:ml-1"></i>
           </div>
-          <!-- Instagram Badge -->
-          <div class="absolute top-2.5 right-2.5 z-20 w-7 h-7 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
-            <i class="fa-brands fa-instagram text-xs text-pink-400"></i>
+          <!-- Platform Badge (White Icon) -->
+          <div class="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
+            ${badgeIcon}
           </div>
         </div>
       </div>
@@ -806,8 +829,8 @@
     }
   }
 
-  function openLightbox(src, alt) {
-    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg) return;
+  function openLightbox(src, alt, type = 'gambar') {
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox) return;
 
     isLightboxOpen = true;
 
@@ -816,8 +839,38 @@
       galleryRotationInterval = null;
     }
 
-    lightboxImg.src = src;
-    lightboxImg.alt = alt || '';
+    if (type === 'video') {
+      const ytId = getYouTubeId(src);
+      if (ytId) {
+        if (lightboxImg) {
+          lightboxImg.src = '';
+          lightboxImg.classList.add('hidden');
+        }
+        if (lightboxVideoContainer && lightboxIframe) {
+          lightboxIframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0`;
+          lightboxVideoContainer.classList.remove('hidden');
+        }
+      } else {
+        // Fallback for external links like Instagram
+        const cleanUrl = src.replace('/embed/', '/');
+        window.open(cleanUrl, '_blank', 'noopener,noreferrer');
+        isLightboxOpen = false;
+        const activeBtn = $('.gallery-filter-btn.bg-accent');
+        const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+        resumeGalleryRotation(filterVal);
+        return;
+      }
+    } else {
+      if (lightboxVideoContainer && lightboxIframe) {
+        lightboxIframe.src = '';
+        lightboxVideoContainer.classList.add('hidden');
+      }
+      if (lightboxImg) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        lightboxImg.classList.remove('hidden');
+      }
+    }
 
     lightboxModal.classList.remove('hidden');
     lightboxModal.classList.add('flex');
@@ -833,7 +886,7 @@
   }
 
   function closeLightbox() {
-    if (!lightboxModal || !lightboxBackdrop || !lightboxBox || !lightboxImg) return;
+    if (!lightboxModal || !lightboxBackdrop || !lightboxBox) return;
 
     lightboxBackdrop.classList.remove('opacity-100');
     lightboxBackdrop.classList.add('opacity-0');
@@ -844,7 +897,9 @@
       lightboxModal.classList.add('hidden');
       lightboxModal.classList.remove('flex');
       
-      lightboxImg.src = '';
+      if (lightboxIframe) lightboxIframe.src = '';
+      if (lightboxImg) lightboxImg.src = '';
+      if (lightboxVideoContainer) lightboxVideoContainer.classList.add('hidden');
       isLightboxOpen = false;
 
       const activeBtn = $('.gallery-filter-btn.bg-accent');
@@ -861,17 +916,12 @@
         const card = e.target.closest('.gallery-card');
         if (!card) return;
         
-        const type = card.getAttribute('data-type');
+        const type = card.getAttribute('data-type') || 'gambar';
         const src = card.getAttribute('data-src');
         const alt = card.getAttribute('data-alt') || '';
 
         if (src) {
-          if (type === 'video') {
-            const cleanUrl = src.replace('/embed/', '/');
-            window.open(cleanUrl, '_blank', 'noopener,noreferrer');
-          } else {
-            openLightbox(src, alt);
-          }
+          openLightbox(src, alt, type);
         }
       });
     }

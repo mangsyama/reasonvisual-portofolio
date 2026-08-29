@@ -383,5 +383,12 @@
     "cover_image": "gallery-video-thumb/video5.jpg",
     "judul_en": "ReasonVisual Drone & Cinematic Reel",
     "judul_id": "Reel Sinematik & Drone ReasonVisual"
+  },
+  {
+    "tipe_media": "video",
+    "sumber_media": "https://youtu.be/tH1KIYl8X8w?si=yNwfnVdBETKCcH6Y",
+    "cover_image": "https://img.youtube.com/vi/tH1KIYl8X8w/hqdefault.jpg",
+    "judul_en": "ReasonVisual Cinematic Video Highlights",
+    "judul_id": "Sorotan Video Sinematik ReasonVisual"
   }
 ]

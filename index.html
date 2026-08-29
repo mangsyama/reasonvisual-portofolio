@@ -232,19 +232,13 @@
     }
     .price-card:hover {
       transform: translateY(-6px);
-    }
-    .price-card-featured {
-      border-color: #B8784E !important;
-      box-shadow: 0 8px 40px rgba(184, 120, 78, 0.12);
-    }
-    .dark .price-card-featured {
-      box-shadow: 0 8px 40px rgba(184, 120, 78, 0.08);
-    }
-    .price-card:hover {
       box-shadow: 0 16px 48px rgba(0,0,0,0.08);
     }
     .dark .price-card:hover {
       box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+    }
+    .price-card-featured {
+      border-color: #B8784E !important;
     }
     /* ── Scroll animation ───────────────────── */
     @keyframes scroll-dot {
@@ -408,45 +402,34 @@
           About Us
         </h2>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div class="reveal" style="transition-delay:0.1s">
-          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden">
+          <div class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-sand-200 dark:border-sand-800">
             <img src="assets/images/about.jpg" alt="Photographer at work" class="w-full h-full object-cover" />
           </div>
         </div>
-        <div>
+        <div class="flex flex-col justify-center">
           <div class="reveal" style="transition-delay:0.15s">
-            <p data-i18n="about_p1" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-6">
-              ReasonVisual is a professional documentation team providing photo, video, and drone shoot services for various needs — ranging from wedding, pre-wedding, event, travel, company profile, graduation, to other custom documentation needs according to your requests.
+            <p data-i18n="about_p1" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-5">
+              ReasonVisual is a professional documentation team providing photo, video, and drone shoot services for various needs — ranging from wedding, pre-wedding, event, travel, company profile, graduation, to villa & property commercial documentations.
             </p>
-            <p data-i18n="about_p2" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-10">
+            <p data-i18n="about_p2" class="text-sand-600 dark:text-sand-400 leading-[1.8] text-[15px] mb-8">
               We believe that every moment has a story worth capturing. With modern equipment and a creative eye, we turn ordinary moments into memorable visual works that can be cherished forever.
             </p>
           </div>
-          <div class="reveal grid grid-cols-3 gap-6 mb-10" style="transition-delay:0.2s">
-            <div>
-              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">50+</div>
-              <div data-i18n="stats_projects" class="text-xs text-sand-500 mt-1">Completed Projects</div>
+          <div class="reveal grid grid-cols-3 gap-3 sm:gap-4 lg:gap-5" style="transition-delay:0.2s">
+            <div class="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-sand-200 dark:border-sand-800 bg-white/60 dark:bg-[#1C1C1C]">
+              <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-accent dark:text-accent-light">50+</div>
+              <div data-i18n="stats_projects" class="text-[11px] sm:text-xs font-medium text-sand-600 dark:text-sand-400 mt-1.5 leading-snug">Completed Projects</div>
             </div>
-            <div>
-              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">30+</div>
-              <div data-i18n="stats_clients" class="text-xs text-sand-500 mt-1">Satisfied Clients</div>
+            <div class="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-sand-200 dark:border-sand-800 bg-white/60 dark:bg-[#1C1C1C]">
+              <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-accent dark:text-accent-light">30+</div>
+              <div data-i18n="stats_clients" class="text-[11px] sm:text-xs font-medium text-sand-600 dark:text-sand-400 mt-1.5 leading-snug">Satisfied Clients</div>
             </div>
-            <div>
-              <div class="font-serif text-3xl sm:text-4xl font-medium text-sand-900 dark:text-sand-100">5+</div>
-              <div data-i18n="stats_experience" class="text-xs text-sand-500 mt-1">Years of Experience</div>
+            <div class="p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border border-sand-200 dark:border-sand-800 bg-white/60 dark:bg-[#1C1C1C]">
+              <div class="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-accent dark:text-accent-light">5+</div>
+              <div data-i18n="stats_experience" class="text-[11px] sm:text-xs font-medium text-sand-600 dark:text-sand-400 mt-1.5 leading-snug">Years of Experience</div>
             </div>
-          </div>
-          <div class="reveal flex flex-wrap gap-2" style="transition-delay:0.25s">
-            <span data-i18n="tag_wedding" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Wedding</span>
-            <span data-i18n="tag_prewedding" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Pre-Wedding</span>
-            <span data-i18n="tag_event" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Event</span>
-            <span data-i18n="tag_travel" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Travel</span>
-            <span data-i18n="tag_company" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Company</span>
-            <span data-i18n="tag_graduation" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Graduation</span>
-            <span data-i18n="tag_drone" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Drone</span>
-            <span data-i18n="tag_cinematic" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Cinematic</span>
-            <span data-i18n="tag_others" class="px-4 py-1.5 border border-sand-300 dark:border-sand-700 rounded-full text-xs text-sand-600 dark:text-sand-400">Others</span>
           </div>
         </div>
       </div>
@@ -460,26 +443,14 @@
   <section id="pricelist" class="py-14 sm:py-20 lg:py-24 bg-sand-100 dark:bg-[#1A1A1A] scroll-mt-14">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
 
-      <div class="reveal text-center mb-6">
+      <div class="reveal text-center mb-10 lg:mb-14">
         <p data-i18n="price_eyebrow" class="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">Package Price List</p>
         <h2 data-i18n="price_title" class="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium leading-tight mb-4">Choose Documentation Package</h2>
         <p data-i18n="price_subtitle" class="text-sand-500 text-sm max-w-xl mx-auto">Professional documentation services for Wedding, Pre-Wedding, Event, Travel, Company, Graduation & other documentations.</p>
       </div>
 
-      <!-- Service tags -->
-      <div class="reveal flex flex-wrap justify-center gap-2 mb-14">
-        <span data-i18n="tag_wedding" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Wedding</span>
-        <span data-i18n="tag_prewedding" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Pre-Wedding</span>
-        <span data-i18n="tag_event" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Event</span>
-        <span data-i18n="tag_travel" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Travel</span>
-        <span data-i18n="tag_company" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Company</span>
-        <span data-i18n="tag_graduation" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Graduation</span>
-        <span data-i18n="tag_property" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Villa & Properti</span>
-        <span data-i18n="tag_others" class="px-4 py-1.5 bg-accent/10 text-accent border border-accent/20 rounded-full text-xs font-medium">Others</span>
-      </div>
-
       <!-- Price Cards Grid (Main Tiered Packages) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-6 lg:mb-8">
 
         <!-- SILVER -->
         <div class="reveal price-card order-1 rounded-2xl border-2 border-sand-300 dark:border-sand-700 bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between" style="transition-delay:0.05s">
@@ -567,10 +538,10 @@
         </div>
 
         <!-- PREMIUM (Featured Flagship) -->
-        <div class="reveal price-card price-card-featured order-3 rounded-2xl border-2 border-accent bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between relative shadow-xl shadow-accent/5" style="transition-delay:0.15s">
+        <div class="reveal price-card price-card-featured order-3 rounded-2xl border-2 border-accent bg-white dark:bg-[#1F1F1F] p-7 sm:p-8 flex flex-col justify-between relative" style="transition-delay:0.15s">
           <!-- Badge -->
           <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-            <span data-i18n="price_best_value" class="px-4 py-1 bg-accent text-white text-[10px] font-bold tracking-[0.15em] uppercase rounded-full shadow-lg shadow-accent/20">Best Value / Flagship</span>
+            <span data-i18n="price_best_value" class="px-4 py-1 bg-accent text-white text-[10px] font-bold tracking-[0.15em] uppercase rounded-full">Best Value / Flagship</span>
           </div>
 
           <div>
@@ -603,7 +574,7 @@
             </ul>
           </div>
 
-          <button data-package="premium" data-i18n="price_btn_premium" class="block w-full text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-xs font-semibold rounded-full transition-colors shadow-md shadow-accent/15">
+          <button data-package="premium" data-i18n="price_btn_premium" class="block w-full text-center px-6 py-3 bg-accent hover:bg-accent-dark text-white text-xs font-semibold rounded-full transition-colors">
             Pilih Premium
           </button>
         </div>
@@ -611,7 +582,7 @@
       </div>
 
       <!-- COMMERCIAL SEGMENT: VILLA & PROPERTI -->
-      <div class="reveal price-card max-w-6xl mx-auto rounded-2xl border-2 border-amber-400/40 dark:border-amber-600/30 bg-gradient-to-br from-white via-sand-50 to-amber-50/30 dark:from-[#1F1F1F] dark:via-[#1A1A1A] dark:to-[#262118] p-7 sm:p-10" style="transition-delay:0.2s">
+      <div class="reveal price-card max-w-6xl mx-auto rounded-2xl border-2 border-amber-400/40 dark:border-amber-600/30 bg-gradient-to-br from-white via-sand-50 to-amber-50/30 dark:from-[#1F1F1F] dark:via-[#1A1A1A] dark:to-[#262118] p-7 sm:p-8" style="transition-delay:0.2s">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           <div class="max-w-2xl">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-bold tracking-[0.15em] uppercase rounded-full mb-4">
@@ -654,7 +625,7 @@
             <div data-i18n="price_b2b_price" class="font-serif text-2xl sm:text-3xl font-medium text-amber-700 dark:text-amber-400 mb-5 whitespace-nowrap">
               Rp 500.000 – Rp 750.000
             </div>
-            <button data-package="drone_property" data-i18n="price_btn_b2b" class="w-full lg:w-auto px-7 py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-full transition-colors shadow-md shadow-amber-600/20 whitespace-nowrap">
+            <button data-package="drone_property" data-i18n="price_btn_b2b" class="w-full lg:w-auto px-7 py-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-full transition-colors whitespace-nowrap">
               Pilih Paket Properti
             </button>
           </div>
@@ -713,40 +684,55 @@
         </div>
 
         <!-- WhatsApp CTA -->
-        <div class="reveal mb-10" style="transition-delay:0.1s">
+        <div class="reveal mb-10 flex justify-center" style="transition-delay:0.1s">
           <a id="cta-whatsapp" href="#" target="_blank" rel="noopener noreferrer"
-             class="group inline-flex items-center gap-4 px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/20 hover:-translate-y-0.5">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            <span data-i18n="contact_btn_wa">Contact via WhatsApp</span>
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+             class="group inline-flex items-center justify-center gap-3 sm:gap-4 px-7 sm:px-8 py-3.5 sm:py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white font-semibold text-sm rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/20 hover:-translate-y-0.5 whitespace-nowrap">
+            <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-i18n="contact_btn_wa" class="whitespace-nowrap">Contact via WhatsApp</span>
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
         </div>
 
         <!-- Socials -->
-        <div class="reveal flex flex-wrap items-center justify-center gap-4" style="transition-delay:0.15s">
+        <div class="reveal grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 w-full max-w-[280px] sm:max-w-2xl mx-auto" style="transition-delay:0.15s">
           <a href="https://instagram.com/mingboyy" target="_blank" rel="noopener noreferrer"
-             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
-            <svg class="w-5 h-5 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            <div class="text-left">
-              <span class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
-              <span class="block text-[11px] text-sand-400">@mingboyy</span>
+             class="group flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors w-full text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <svg class="w-5 h-5 flex-shrink-0 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <div class="min-w-0">
+                <span class="block text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
+                <span class="block text-[11px] text-sand-400 truncate">@mingboyy</span>
+              </div>
             </div>
+            <svg class="w-3.5 h-3.5 text-sand-400 group-hover:text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7v8"/>
+            </svg>
           </a>
           <a href="https://www.instagram.com/reasonvisual/" target="_blank" rel="noopener noreferrer"
-             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
-            <svg class="w-5 h-5 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            <div class="text-left">
-              <span class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
-              <span class="block text-[11px] text-sand-400">@reasonvisual</span>
+             class="group flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors w-full text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <svg class="w-5 h-5 flex-shrink-0 text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <div class="min-w-0">
+                <span class="block text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Instagram</span>
+                <span class="block text-[11px] text-sand-400 truncate">@reasonvisual</span>
+              </div>
             </div>
+            <svg class="w-3.5 h-3.5 text-sand-400 group-hover:text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7v8"/>
+            </svg>
           </a>
           <a href="tel:+6281805230948"
-             class="group flex items-center gap-3 px-5 py-3 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors">
-            <i class="fa-solid fa-phone text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 text-[17px] transition-colors w-5 text-center"></i>
-            <div class="text-left">
-              <span data-i18n="contact_phone_label" class="text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Phone</span>
-              <span class="block text-[11px] text-sand-400">0818-0523-0948</span>
+             class="group flex items-center justify-between gap-3 px-4 sm:px-5 py-3.5 rounded-xl border border-sand-200 dark:border-sand-800 hover:border-sand-400 dark:hover:border-sand-600 transition-colors w-full text-left">
+            <div class="flex items-center gap-3 min-w-0">
+              <i class="fa-solid fa-phone text-sand-500 group-hover:text-sand-800 dark:group-hover:text-sand-200 text-[17px] transition-colors w-5 text-center flex-shrink-0"></i>
+              <div class="min-w-0">
+                <span data-i18n="contact_phone_label" class="block text-xs font-medium text-sand-700 dark:text-sand-300 group-hover:text-sand-900 dark:group-hover:text-sand-100 transition-colors">Phone</span>
+                <span class="block text-[11px] text-sand-400 truncate">0818-0523-0948</span>
+              </div>
             </div>
+            <svg class="w-3.5 h-3.5 text-sand-400 group-hover:text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7v8"/>
+            </svg>
           </a>
         </div>
 
@@ -759,15 +745,8 @@
        FOOTER
   ═══════════════════════════════════════ -->
   <footer class="border-t border-sand-200 dark:border-sand-800 py-8">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-sand-500">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 text-center text-xs text-sand-500">
       <span>&copy; <span id="current-year">2026</span> ReasonVisual. <span data-i18n="footer_rights">All rights reserved.</span></span>
-      <div class="flex items-center gap-4">
-        <a href="#home" data-i18n="nav_home" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Home</a>
-        <a href="#about" data-i18n="nav_about" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">About</a>
-        <a href="#pricelist" data-i18n="nav_pricelist" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Price List</a>
-        <a href="#gallery" data-i18n="nav_gallery" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Gallery</a>
-        <a href="#contact" data-i18n="nav_contact" class="hover:text-sand-800 dark:hover:text-sand-300 transition-colors">Contact</a>
-      </div>
     </div>
   </footer>
 
@@ -875,6 +854,10 @@
     <div id="lightbox-box" class="relative z-10 max-w-5xl w-full h-full max-h-[85vh] flex items-center justify-center transform scale-95 opacity-0 transition-all duration-300 pointer-events-none">
       <!-- For Images -->
       <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none pointer-events-auto" />
+      <!-- For Video Embeds -->
+      <div id="lightbox-video-container" class="w-full max-w-4xl aspect-video rounded-2xl overflow-hidden shadow-2xl pointer-events-auto hidden bg-black border border-white/10">
+        <iframe id="lightbox-iframe" class="w-full h-full border-0" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 
