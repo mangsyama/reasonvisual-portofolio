@@ -250,7 +250,7 @@
     .animate-scroll-dot {
       animation: scroll-dot 2.2s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
     }
-    /* ── Photo Sub-Filters Collapsible ──────── */
+    /* ── Category Sub-Filters Collapsible (Photos & Videos) ── */
     #photo-sub-filters {
       max-height: 0;
       opacity: 0;
@@ -261,9 +261,9 @@
                   margin-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     #photo-sub-filters.sub-filters-open {
-      max-height: 140px;
+      max-height: 240px;
       opacity: 1;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -649,22 +649,15 @@
       </div>
 
       <!-- Gallery Filter Tabs -->
-      <div class="reveal flex flex-wrap gap-2.5 mb-10" style="transition-delay: 0.1s">
-        <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-accent text-white shadow-md shadow-accent/15" data-filter="all" data-i18n="filter_all">All</button>
+      <div class="reveal flex flex-wrap gap-2.5 mb-5 sm:mb-6" style="transition-delay: 0.1s">
+        <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-accent text-white" data-filter="all" data-i18n="filter_all">All</button>
         <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-filter="gambar" data-i18n="filter_photo">Photos</button>
         <button class="gallery-filter-btn px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-filter="video" data-i18n="filter_video">Videos</button>
       </div>
 
-      <!-- Photo Categories Sub-Filters -->
-      <div id="photo-sub-filters" class="flex flex-wrap gap-2">
-        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-accent text-white shadow-sm" data-subfilter="all" data-i18n="sub_all">All Photos</button>
-        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="wedding" data-i18n="tag_wedding">Wedding</button>
-        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="bali_ceremony" data-i18n="tag_bali">Bali Ceremony</button>
-        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="travel" data-i18n="tag_travel">Travel</button>
-        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700" data-subfilter="graduation" data-i18n="tag_graduation">Graduation</button>
-      </div>
+      <!-- Category Sub-Filters (Photos & Videos) -->
+      <div id="photo-sub-filters" class="flex flex-wrap gap-2"></div>
 
-      <div id="gallery-loader" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"></div>
       <div id="gallery-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"></div>
     </div>
   </section>
@@ -861,6 +854,11 @@
     </div>
   </div>
 
+  <!-- Supabase Client & Configuration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+
+  <!-- Main Application Logic -->
   <script src="assets/js/app.js"></script>
 </body>
 </html>

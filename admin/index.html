@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReasonVisual - Admin Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23B8784E'><path d='M4 4h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6z'/></svg>">
+
+  <!-- Sync Theme Before Paint (Default: White / Light) -->
+  <script>
+    if (localStorage.getItem('rv-theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            sand: {
+              50: '#FDFCFA',
+              100: '#F8F6F1',
+              200: '#F0ECE3',
+              300: '#E3DDD1',
+              400: '#C4BAA6',
+              500: '#A69B85',
+              600: '#887D67',
+              700: '#6B614D',
+              800: '#4A4235',
+              900: '#2C2720',
+            },
+            accent: {
+              DEFAULT: '#B8784E',
+              light: '#D4956B',
+              dark: '#965F3A',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-sand-100 dark:bg-[#0F0F0F] text-sand-900 dark:text-sand-100 flex flex-col antialiased selection:bg-accent selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-[#141414]/95 backdrop-blur-md border-b border-sand-200 dark:border-white/10 transition-colors">
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex flex-col">
+        <span class="text-base font-bold text-sand-900 dark:text-white tracking-tight leading-tight">Reason<span class="text-accent font-bold">Visual</span></span>
+        <span class="text-[11px] text-sand-500 dark:text-sand-400 font-medium mt-0.5">CMS Admin</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Theme Toggle Button -->
+        <button
+          id="btn-theme-toggle"
+          class="w-9 h-9 sm:w-auto sm:px-3.5 sm:py-2 rounded-xl bg-sand-200/60 dark:bg-white/5 hover:bg-sand-200 dark:hover:bg-white/10 border border-sand-300 dark:border-white/10 text-xs font-medium text-sand-700 dark:text-sand-300 hover:text-sand-900 dark:hover:text-white transition-all flex items-center justify-center gap-1.5"
+          title="Ubah Tema (Terang / Gelap)"
+        >
+          <i class="fa-solid fa-moon dark:hidden text-sand-700"></i>
+          <i class="fa-solid fa-sun hidden dark:inline-block text-amber-400"></i>
+          <span class="hidden sm:inline text-xs font-medium">Tema</span>
+        </button>
+
+        <a
+          href="../"
+          target="_blank"
+          class="w-9 h-9 sm:w-auto sm:px-3.5 sm:py-2 rounded-xl bg-sand-200/60 dark:bg-white/5 hover:bg-sand-200 dark:hover:bg-white/10 border border-sand-300 dark:border-white/10 text-xs font-medium text-sand-700 dark:text-sand-300 hover:text-sand-900 dark:hover:text-white transition-all flex items-center justify-center gap-1.5"
+          title="Lihat Website Utama"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+          <span class="hidden sm:inline text-xs font-medium">Website</span>
+        </a>
+
+        <div class="h-5 w-px bg-sand-300 dark:border-white/10 hidden sm:block"></div>
+
+        <button
+          id="btn-logout"
+          class="w-9 h-9 sm:w-auto sm:px-3.5 sm:py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-xs font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-all flex items-center justify-center gap-1.5"
+          title="Keluar dari Admin"
+        >
+          <i class="fa-solid fa-right-from-bracket text-xs"></i>
+          <span class="hidden sm:inline text-xs font-medium">Keluar</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+    
+    <!-- Hero / Stats Section (Total Foto, Total Video, & Storage Supabase) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+      <div class="bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/5 rounded-2xl p-4 sm:p-5 transition-all">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-medium text-sand-500 dark:text-sand-400">Total Foto</span>
+          <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+        </div>
+        <div id="stat-photos" class="text-2xl font-bold text-sand-900 dark:text-white">0</div>
+        <div class="text-[11px] text-sand-500 mt-1">Foto portofolio</div>
+      </div>
+
+      <div class="bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/5 rounded-2xl p-4 sm:p-5 transition-all">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-medium text-sand-500 dark:text-sand-400">Total Video</span>
+          <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-video"></i>
+          </div>
+        </div>
+        <div id="stat-videos" class="text-2xl font-bold text-sand-900 dark:text-white">0</div>
+        <div class="text-[11px] text-sand-500 mt-1">YouTube & Reels</div>
+      </div>
+
+      <!-- Storage Supabase Tracking Card (Full width on mobile col-span-2, 1 col on sm+) -->
+      <div class="col-span-2 sm:col-span-1 bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/5 rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-medium text-sand-500 dark:text-sand-400">Penyimpanan Storage</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs">
+              <i class="fa-solid fa-hard-drive"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-1.5">
+            <span id="stat-storage-used" class="text-xl sm:text-2xl font-bold text-sand-900 dark:text-white">0 KB</span>
+            <span class="text-xs text-sand-400">/ 1 GB</span>
+          </div>
+        </div>
+        <div class="mt-2.5">
+          <div class="flex items-center justify-between text-[11px] text-sand-500 mb-1">
+            <span id="stat-storage-percent">0% terpakai</span>
+            <span class="text-[10px] text-sand-400 font-medium">Batas Gratis: 1 GB</span>
+          </div>
+          <div class="w-full h-1.5 bg-sand-200 dark:bg-white/10 rounded-full overflow-hidden">
+            <div id="stat-storage-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 1%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integrated Gallery Section: Filter Bar & Media Grid in One Container -->
+    <div class="bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl overflow-hidden">
+      
+      <!-- Top Filter & Action Bar Header -->
+      <div class="p-3.5 sm:p-5 border-b border-sand-200 dark:border-white/10 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2.5 sm:gap-3 bg-sand-50/50 dark:bg-white/[0.01]">
+        
+        <!-- Left Group: Search & Dropdowns -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1">
+          <!-- Search Box (Full width on mobile, auto on desktop) -->
+          <div class="relative w-full sm:flex-1 min-w-0">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sand-400 dark:text-sand-500 text-xs">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+            <input
+              type="text"
+              id="filter-search"
+              placeholder="Cari media, kategori, URL..."
+              class="w-full h-11 pl-9 pr-3 rounded-xl bg-white dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white placeholder-sand-400 dark:placeholder-sand-500 focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+          </div>
+
+          <!-- Tipe & Kategori (Grid 2 cols full width on mobile, flex on sm+) -->
+          <div class="grid grid-cols-2 gap-2 w-full sm:w-auto sm:flex sm:items-center">
+            <!-- Filter Tipe -->
+            <select
+              id="filter-type"
+              class="w-full sm:w-auto h-11 px-3 rounded-xl bg-white dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-800 dark:text-sand-300 focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              <option value="all">Semua Tipe</option>
+              <option value="gambar">Foto Only</option>
+              <option value="video">Video Only</option>
+            </select>
+
+            <!-- Filter Kategori -->
+            <select
+              id="filter-category"
+              class="w-full sm:w-auto h-11 px-3 rounded-xl bg-white dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-800 dark:text-sand-300 focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              <option value="all">Semua Kategori</option>
+              <option value="travel">Travel</option>
+              <option value="wedding">Wedding</option>
+              <option value="graduation">Graduation</option>
+              <option value="bali_ceremony">Bali Ceremony</option>
+              <option value="villa_property">Villa & Property</option>
+              <option value="event">Event</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Right Group: Action Buttons (Grid 2 cols full width on mobile, flex on sm+) -->
+        <div class="grid grid-cols-2 gap-2 w-full lg:w-auto sm:flex sm:items-center flex-shrink-0">
+          <button
+            type="button"
+            id="btn-manage-categories"
+            class="w-full sm:w-auto h-11 px-4 rounded-xl bg-sand-200/70 dark:bg-white/5 hover:bg-sand-200 dark:hover:bg-white/10 border border-sand-300 dark:border-white/10 text-sand-700 dark:text-sand-300 hover:text-sand-900 dark:hover:text-white text-xs font-semibold transition-colors flex items-center justify-center gap-2 flex-shrink-0"
+          >
+            <i class="fa-solid fa-tags text-accent text-xs"></i>
+            <span class="truncate">Kelola Kategori</span>
+          </button>
+
+          <button
+            type="button"
+            id="btn-add-media"
+            class="w-full sm:w-auto h-11 px-4 rounded-xl bg-accent hover:bg-accent-light text-white font-semibold text-xs tracking-wide border border-accent hover:border-accent-light transition-colors flex items-center justify-center gap-2 flex-shrink-0"
+          >
+            <i class="fa-solid fa-plus text-xs"></i>
+            <span class="truncate">Tambah Media</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Media Grid / Skeleton Content Area -->
+      <div id="media-container" class="p-4 sm:p-6 min-h-[350px]">
+        <!-- Initial Skeleton Loading Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div class="bg-sand-50/50 dark:bg-[#1A1A1A] border border-sand-200 dark:border-white/5 rounded-2xl overflow-hidden animate-pulse flex flex-col">
+            <div class="aspect-video bg-sand-200/70 dark:bg-white/5 relative flex items-center justify-center">
+              <i class="fa-regular fa-image text-2xl text-sand-300 dark:text-white/10"></i>
+              <div class="absolute top-2.5 left-2.5 w-12 h-4 bg-sand-300/60 dark:bg-white/10 rounded"></div>
+            </div>
+            <div class="p-3.5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="h-3.5 bg-sand-300/70 dark:bg-white/10 rounded-md w-1/2"></div>
+                <div class="h-2 bg-sand-200/60 dark:bg-white/5 rounded-md w-3/4"></div>
+              </div>
+              <div class="pt-3 border-t border-sand-100 dark:border-white/5 flex items-center justify-end gap-1.5">
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-sand-50/50 dark:bg-[#1A1A1A] border border-sand-200 dark:border-white/5 rounded-2xl overflow-hidden animate-pulse flex flex-col">
+            <div class="aspect-video bg-sand-200/70 dark:bg-white/5 relative flex items-center justify-center">
+              <i class="fa-regular fa-image text-2xl text-sand-300 dark:text-white/10"></i>
+              <div class="absolute top-2.5 left-2.5 w-12 h-4 bg-sand-300/60 dark:bg-white/10 rounded"></div>
+            </div>
+            <div class="p-3.5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="h-3.5 bg-sand-300/70 dark:bg-white/10 rounded-md w-1/2"></div>
+                <div class="h-2 bg-sand-200/60 dark:bg-white/5 rounded-md w-3/4"></div>
+              </div>
+              <div class="pt-3 border-t border-sand-100 dark:border-white/5 flex items-center justify-end gap-1.5">
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-sand-50/50 dark:bg-[#1A1A1A] border border-sand-200 dark:border-white/5 rounded-2xl overflow-hidden animate-pulse flex flex-col">
+            <div class="aspect-video bg-sand-200/70 dark:bg-white/5 relative flex items-center justify-center">
+              <i class="fa-regular fa-image text-2xl text-sand-300 dark:text-white/10"></i>
+              <div class="absolute top-2.5 left-2.5 w-12 h-4 bg-sand-300/60 dark:bg-white/10 rounded"></div>
+            </div>
+            <div class="p-3.5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="h-3.5 bg-sand-300/70 dark:bg-white/10 rounded-md w-1/2"></div>
+                <div class="h-2 bg-sand-200/60 dark:bg-white/5 rounded-md w-3/4"></div>
+              </div>
+              <div class="pt-3 border-t border-sand-100 dark:border-white/5 flex items-center justify-end gap-1.5">
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-sand-50/50 dark:bg-[#1A1A1A] border border-sand-200 dark:border-white/5 rounded-2xl overflow-hidden animate-pulse flex flex-col">
+            <div class="aspect-video bg-sand-200/70 dark:bg-white/5 relative flex items-center justify-center">
+              <i class="fa-regular fa-image text-2xl text-sand-300 dark:text-white/10"></i>
+              <div class="absolute top-2.5 left-2.5 w-12 h-4 bg-sand-300/60 dark:bg-white/10 rounded"></div>
+            </div>
+            <div class="p-3.5 flex-1 flex flex-col justify-between space-y-4">
+              <div class="space-y-2">
+                <div class="h-3.5 bg-sand-300/70 dark:bg-white/10 rounded-md w-1/2"></div>
+                <div class="h-2 bg-sand-200/60 dark:bg-white/5 rounded-md w-3/4"></div>
+              </div>
+              <div class="pt-3 border-t border-sand-100 dark:border-white/5 flex items-center justify-end gap-1.5">
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sand-200 dark:bg-white/5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADD / EDIT MEDIA (FULL SCREEN)                    -->
+  <!-- ======================================================== -->
+  <div id="media-modal" class="fixed inset-0 z-50 hidden flex-col bg-sand-100 dark:bg-[#0E0E0E] text-sand-900 dark:text-white">
+    
+    <!-- Full Screen Header (Aligned to max-w-2xl on desktop) -->
+    <header class="w-full bg-white/95 dark:bg-[#141414]/95 backdrop-blur-md border-b border-sand-200 dark:border-white/10 px-4 sm:px-8 py-3.5 flex-shrink-0">
+      <div class="max-w-2xl w-full mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <h3 id="modal-title" class="text-base font-bold text-sand-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-photo-film text-accent"></i>
+            <span>Tambah Media Baru</span>
+          </h3>
+        </div>
+        <button
+          type="button"
+          id="modal-close"
+          class="px-3.5 py-1.5 rounded-xl bg-sand-200/70 dark:bg-white/10 hover:bg-sand-300 dark:hover:bg-white/20 text-sand-700 dark:text-sand-300 hover:text-sand-900 dark:hover:text-white text-xs font-semibold transition-colors flex items-center gap-1.5"
+          title="Tutup Halaman"
+        >
+          <i class="fa-solid fa-xmark text-xs"></i>
+          <span>Tutup</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Full Screen Scrollable Body -->
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div class="max-w-2xl w-full mx-auto bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-5 sm:p-7 transition-all">
+        <form id="media-form" class="space-y-5">
+          <input type="hidden" id="edit-id" value="" />
+
+          <!-- Tab Switcher: Foto vs Video -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400 mb-2">Tipe Media</label>
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-xl bg-sand-100 dark:bg-[#202020] border border-sand-200 dark:border-white/10">
+              <button
+                type="button"
+                id="tab-foto"
+                class="py-2.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all bg-accent text-white"
+              >
+                <i class="fa-solid fa-camera"></i>
+                <span>Foto</span>
+              </button>
+              <button
+                type="button"
+                id="tab-video"
+                class="py-2.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition-all text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white"
+              >
+                <i class="fa-solid fa-video"></i>
+                <span>Video</span>
+              </button>
+            </div>
+            <input type="hidden" id="input-tipe-media" value="gambar" />
+          </div>
+
+          <!-- FOTO SECTION -->
+          <div id="section-foto" class="space-y-4">
+            <!-- Upload Source Mode (Upload File vs URL) -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400">File Foto</label>
+                <div class="flex items-center gap-2 text-xs">
+                  <button type="button" id="btn-mode-upload" class="text-accent underline text-[11px] font-medium">Upload File</button>
+                  <span class="text-sand-300 dark:text-sand-600">|</span>
+                  <button type="button" id="btn-mode-url" class="text-sand-500 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white text-[11px]">Gunakan URL</button>
+                </div>
+              </div>
+
+              <!-- Upload Box Dropzone (Multiple Up to 5 Photos) -->
+              <div id="dropzone-box" class="border-2 border-dashed border-sand-300 dark:border-white/15 hover:border-accent rounded-xl p-5 sm:p-6 text-center cursor-pointer transition-colors bg-sand-50/70 dark:bg-[#1E1E1E]/50">
+                <input type="file" id="file-foto" accept="image/*" multiple class="hidden" />
+                <div id="dropzone-prompt">
+                  <i class="fa-solid fa-cloud-arrow-up text-3xl text-accent mb-2"></i>
+                  <p class="text-xs font-medium text-sand-800 dark:text-sand-200">Klik untuk pilih foto atau seret ke sini</p>
+                  <p class="text-[10px] text-sand-500 mt-1">Pilih beberapa foto sekaligus (JPG, PNG, WebP) • Otomatis dikompres & dibuat thumbnail WebP</p>
+                </div>
+                <div id="dropzone-preview" class="hidden space-y-3 text-left">
+                  <div class="flex items-center justify-between pb-2 border-b border-sand-200 dark:border-white/10">
+                    <span id="preview-count-badge" class="text-xs font-semibold text-sand-800 dark:text-sand-200 flex items-center gap-1.5">
+                      <i class="fa-solid fa-images text-accent"></i>
+                      <span id="preview-count-text">0 Foto Dipilih</span>
+                    </span>
+                    <button type="button" id="btn-change-file" class="text-[11px] text-red-500 hover:underline font-medium">Hapus / Ganti Semua</button>
+                  </div>
+                  <!-- Mini Thumbnails Grid -->
+                  <div id="preview-thumbnails-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-56 overflow-y-auto pr-1">
+                    <!-- Populated dynamically in admin.js -->
+                  </div>
+                  <div class="flex items-center justify-between pt-1 text-[10px] text-sand-500">
+                    <span id="preview-total-size">Total: 0 MB</span>
+                    <span class="text-emerald-600 dark:text-emerald-400 font-medium"><i class="fa-solid fa-bolt mr-1"></i>Otomatis dioptimalkan WebP</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- URL Input (Hidden by default) -->
+              <div id="url-box" class="hidden">
+                <input
+                  type="url"
+                  id="input-foto-url"
+                  placeholder="https://.../foto.jpg"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white placeholder-sand-400 dark:placeholder-sand-600 focus:outline-none focus:ring-1 focus:ring-accent"
+                />
+                <p class="text-[10px] text-sand-500 mt-1">Gunakan URL foto langsung dari internet/cloud.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIDEO SECTION -->
+          <div id="section-video" class="hidden space-y-4">
+            <div>
+              <label for="input-video-url" class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400 mb-1.5">
+                Link Video (YouTube / Instagram Reel)
+              </label>
+              <input
+                type="url"
+                id="input-video-url"
+                placeholder="https://www.youtube.com/watch?v=... atau https://instagram.com/reel/..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white placeholder-sand-400 dark:placeholder-sand-600 focus:outline-none focus:ring-1 focus:ring-accent"
+              />
+            </div>
+
+            <div>
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1.5">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400">
+                  Upload Foto Thumbnail (Opsional)
+                </label>
+                <span class="text-[10px] text-accent font-medium"><i class="fa-solid fa-bolt mr-1"></i>WebP Ringan (~40-70 KB)</span>
+              </div>
+
+              <!-- Dropzone Upload Thumbnail Video -->
+              <div id="video-thumb-dropzone" class="border-2 border-dashed border-sand-300 dark:border-white/15 hover:border-accent rounded-xl p-4 text-center cursor-pointer transition-colors bg-sand-50/70 dark:bg-[#1E1E1E]/50">
+                <input type="file" id="file-video-thumbnail" accept="image/*" class="hidden" />
+                <div id="video-thumb-prompt">
+                  <i class="fa-solid fa-cloud-arrow-up text-2xl text-accent mb-1.5"></i>
+                  <p class="text-xs font-medium text-sand-800 dark:text-sand-200">Klik untuk pilih foto thumbnail (JPG, PNG, WebP)</p>
+                  <p class="text-[10px] text-sand-500 mt-0.5">
+                    Otomatis dikompres khusus menjadi thumbnail WebP super ringan
+                  </p>
+                </div>
+
+                <!-- Preview Thumbnail Terpilih -->
+                <div id="video-thumb-preview" class="hidden text-left">
+                  <div class="flex items-center gap-3">
+                    <div class="relative w-24 aspect-video rounded-lg overflow-hidden bg-sand-200 dark:bg-white/5 border border-sand-300 dark:border-white/10 flex-shrink-0">
+                      <img id="video-thumb-img" src="" alt="Preview Thumbnail" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p id="video-thumb-name" class="text-xs font-semibold text-sand-800 dark:text-sand-200 truncate">thumbnail.jpg</p>
+                      <p id="video-thumb-size" class="text-[10px] text-sand-500 mt-0.5">0 KB • WebP Optimized</p>
+                      <button type="button" id="btn-remove-video-thumb" class="text-[11px] text-red-500 hover:underline mt-1 font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-trash-can text-[10px]"></i>
+                        <span>Hapus Thumbnail</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- KATEGORI -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="input-kategori" class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400">
+                Kategori
+              </label>
+              <button type="button" id="btn-toggle-new-cat" class="text-[11px] text-accent font-medium hover:underline flex items-center gap-1">
+                <i class="fa-solid fa-plus text-[10px]"></i>
+                <span>Kategori Baru</span>
+              </button>
+            </div>
+            
+            <select
+              id="input-kategori"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-accent"
+            >
+              <option value="" disabled selected>-- Pilih Kategori --</option>
+            </select>
+
+            <!-- Input Kategori Baru -->
+            <div id="new-cat-box" class="hidden mt-2 space-y-1">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="input-kategori-baru"
+                  placeholder="Nama kategori baru..."
+                  class="w-full pl-3 pr-8 py-2 rounded-xl bg-sand-50 dark:bg-[#202020] border border-accent text-xs text-sand-900 dark:text-white placeholder-sand-400 dark:placeholder-sand-500 focus:outline-none focus:ring-1 focus:ring-accent"
+                />
+                <button type="button" id="btn-cancel-new-cat" class="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-sand-400 hover:text-red-500" title="Batal">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+              <p class="text-[10px] text-sand-500">Kategori baru akan otomatis muncul di website & admin.</p>
+            </div>
+          </div>
+
+          <!-- Progress Indicator -->
+          <div id="upload-progress-box" class="hidden p-3 rounded-xl bg-accent/10 border border-accent/20">
+            <div class="flex items-center justify-between text-xs text-accent mb-1.5 font-medium">
+              <span id="progress-text">Mengunggah foto ke Supabase Storage...</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-sand-200 dark:bg-[#202020] rounded-full overflow-hidden">
+              <div id="progress-bar" class="h-full bg-accent transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Modal Footer Actions (Full width on mobile, auto on sm+) -->
+          <div class="grid grid-cols-2 sm:flex sm:items-center sm:justify-end gap-2.5 pt-2">
+            <button
+              type="button"
+              id="btn-cancel-modal"
+              class="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-sand-300 dark:border-white/10 text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white text-xs font-semibold transition-colors flex items-center justify-center"
+            >
+              Batal
+            </button>
+            <button
+              type="submit"
+              id="btn-save-media"
+              class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-accent hover:bg-accent-light text-white text-xs font-semibold transition-all flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-accent"
+              disabled
+              title="Silakan pilih kategori terlebih dahulu"
+            >
+              <i class="fa-solid fa-floppy-disk text-xs"></i>
+              <span>Simpan Data</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: CONFIRM DELETE                                    -->
+  <!-- ======================================================== -->
+  <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative z-10 w-full max-w-sm bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-6 text-center transition-all">
+      <div class="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-xl mx-auto mb-4 border border-red-500/20">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <h3 class="text-base font-semibold text-sand-900 dark:text-white mb-1">Hapus Media Ini?</h3>
+      <p class="text-xs text-sand-500 dark:text-sand-400 mb-6">Data akan dihapus permanen dari database Supabase.</p>
+      
+      <div class="flex gap-3">
+        <button
+          type="button"
+          id="btn-cancel-delete"
+          class="flex-1 py-2.5 rounded-xl border border-sand-300 dark:border-white/10 text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white text-xs font-medium transition-colors"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          id="btn-confirm-delete"
+          class="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-semibold transition-colors"
+        >
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: KELOLA KATEGORI (FULL SCREEN)                     -->
+  <!-- ======================================================== -->
+  <div id="category-modal" class="fixed inset-0 z-50 hidden flex-col bg-sand-100 dark:bg-[#0E0E0E] text-sand-900 dark:text-white">
+    <!-- Full Screen Header (Aligned to max-w-2xl on desktop) -->
+    <header class="w-full bg-white/95 dark:bg-[#141414]/95 backdrop-blur-md border-b border-sand-200 dark:border-white/10 px-4 sm:px-8 py-3.5 flex-shrink-0">
+      <div class="max-w-2xl w-full mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <h3 class="text-base font-bold text-sand-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-tags text-accent"></i>
+            <span>Kelola Kategori Portofolio</span>
+          </h3>
+        </div>
+        <button
+          type="button"
+          id="modal-cat-close"
+          class="px-3.5 py-1.5 rounded-xl bg-sand-200/70 dark:bg-white/10 hover:bg-sand-300 dark:hover:bg-white/20 text-sand-700 dark:text-sand-300 hover:text-sand-900 dark:hover:text-white text-xs font-semibold transition-colors flex items-center gap-1.5"
+          title="Tutup Halaman"
+        >
+          <i class="fa-solid fa-xmark text-xs"></i>
+          <span>Tutup</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Full Screen Scrollable Body -->
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+      <div class="max-w-2xl w-full mx-auto space-y-5">
+        <!-- Add New Category Box (Stacked on mobile, row on sm+) -->
+        <div class="bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-4 sm:p-6 space-y-2.5">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400">
+            Tambah Kategori Baru
+          </label>
+          <div class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
+            <input
+              type="text"
+              id="input-direct-new-cat"
+              placeholder="Misal: Aerial Drone, Culinary, Architecture..."
+              class="w-full sm:flex-1 h-11 px-3.5 rounded-xl shrink-0 bg-sand-50 dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white placeholder-sand-400 dark:placeholder-sand-500 focus:outline-none focus:ring-1 focus:ring-accent"
+            />
+            <button
+              type="button"
+              id="btn-save-direct-new-cat"
+              class="w-full sm:w-auto h-11 px-5 rounded-xl shrink-0 bg-accent hover:bg-accent-light text-white text-xs font-semibold border border-accent hover:border-accent-light transition-all flex items-center justify-center gap-2 flex-shrink-0"
+            >
+              <i class="fa-solid fa-plus text-xs"></i>
+              <span>Tambah Kategori</span>
+            </button>
+          </div>
+          <p class="text-[11px] text-sand-500">Kategori baru akan langsung tersimpan di Supabase & otomatis muncul di filter galeri.</p>
+        </div>
+
+        <!-- Active Category List Container -->
+        <div class="bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-4 sm:p-6 space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2.5 border-b border-sand-100 dark:border-white/5">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400">
+              Daftar Kategori Aktif
+            </label>
+            <span class="text-[11px] text-sand-400">Kelola kategori portofolio Anda</span>
+          </div>
+          <div id="category-list-container" class="space-y-2">
+            <!-- Populated by admin.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: HAPUS KATEGORI                                    -->
+  <!-- ======================================================== -->
+  <div id="delete-category-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative z-10 w-full max-w-md bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-6 transition-all">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center text-lg flex-shrink-0 border border-red-500/20">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold text-sand-900 dark:text-white">Hapus Kategori</h3>
+          <p id="delete-cat-subtitle" class="text-xs text-sand-500 dark:text-sand-400">Konfirmasi penghapusan kategori</p>
+        </div>
+      </div>
+
+      <input type="hidden" id="delete-cat-slug" value="" />
+
+      <!-- State: Kategori Kosong (0 Media) -->
+      <div id="delete-cat-zero-box" class="hidden py-2 text-xs text-sand-600 dark:text-sand-300">
+        <p>Apakah Anda yakin ingin menghapus kategori <strong id="delete-cat-name-zero" class="text-sand-900 dark:text-white"></strong>?</p>
+        <p class="text-[11px] text-sand-500 mt-1">Kategori ini tidak memiliki media dan akan langsung dihapus dari daftar.</p>
+      </div>
+
+      <!-- State: Kategori Ada Media (>0 Media) -->
+      <div id="delete-cat-has-media-box" class="hidden space-y-3 py-2 text-xs">
+        <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400">
+          <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>
+          <span>Kategori <strong id="delete-cat-name-media"></strong> memiliki <strong id="delete-cat-count">0</strong> media aktif.</span>
+        </div>
+        <p class="text-sand-600 dark:text-sand-300 font-medium">Pilih tindakan untuk media yang ada:</p>
+        
+        <div class="space-y-2">
+          <label class="flex items-start gap-2.5 p-3 rounded-xl border border-sand-200 dark:border-white/10 hover:border-accent cursor-pointer transition-colors bg-sand-50/60 dark:bg-white/[0.02]">
+            <input type="radio" name="cat-media-action" value="move" checked class="mt-0.5 text-accent focus:ring-accent" />
+            <div class="flex-1">
+              <span class="font-semibold text-sand-900 dark:text-white block">Pindahkan ke kategori lain (Disarankan)</span>
+              <span class="text-[11px] text-sand-500 block mb-2">Media tidak akan dihapus, melainkan dipindahkan ke:</span>
+              <select id="delete-cat-target-select" class="w-full px-3 py-1.5 rounded-lg bg-white dark:bg-[#202020] border border-sand-300 dark:border-white/15 text-xs text-sand-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-accent">
+                <!-- Diisi opsi kategori tujuan -->
+              </select>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-2.5 p-3 rounded-xl border border-red-200 dark:border-red-900/30 hover:border-red-500 cursor-pointer transition-colors bg-red-50/50 dark:bg-red-950/10">
+            <input type="radio" name="cat-media-action" value="delete_all" class="mt-0.5 text-red-600 focus:ring-red-500" />
+            <div>
+              <span class="font-semibold text-red-600 dark:text-red-400 block">Hapus semua media di kategori ini</span>
+              <span class="text-[11px] text-sand-500 block">Semua foto/video di kategori ini akan dihapus permanen dari database.</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-3 pt-4 border-t border-sand-200 dark:border-white/10 mt-4">
+        <button
+          type="button"
+          id="btn-cancel-delete-cat"
+          class="flex-1 py-2.5 rounded-xl border border-sand-300 dark:border-white/10 text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white text-xs font-medium transition-colors"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          id="btn-confirm-delete-cat"
+          class="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+        >
+          <i class="fa-solid fa-trash-can text-xs"></i>
+          <span>Ya, Hapus Kategori</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: EDIT / RENAME KATEGORI                            -->
+  <!-- ======================================================== -->
+  <div id="edit-category-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative z-10 w-full max-w-sm bg-white dark:bg-[#171717] border border-sand-200 dark:border-white/10 rounded-2xl p-6 transition-all">
+      <div class="flex items-center justify-between pb-3 border-b border-sand-200 dark:border-white/10 mb-4">
+        <h3 class="text-sm font-semibold text-sand-900 dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-accent"></i>
+          <span>Ubah Nama Kategori</span>
+        </h3>
+        <button id="btn-close-edit-cat-modal" class="text-sand-400 hover:text-sand-700 dark:hover:text-white text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <input type="hidden" id="edit-cat-old-slug" value="" />
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-sand-600 dark:text-sand-400 mb-1.5">
+            Nama Kategori Baru
+          </label>
+          <input
+            type="text"
+            id="input-edit-cat-name"
+            placeholder="Contoh: Drone Aerial, Culinary..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-sand-50 dark:bg-[#202020] border border-sand-300 dark:border-white/10 text-xs text-sand-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-accent"
+          />
+          <p class="text-[10px] text-sand-500 mt-1">Nama kategori pada semua media terkait akan otomatis diperbarui di database.</p>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-4 border-t border-sand-200 dark:border-white/10 mt-4">
+        <button
+          type="button"
+          id="btn-cancel-edit-cat"
+          class="flex-1 py-2.5 rounded-xl border border-sand-300 dark:border-white/10 text-sand-600 dark:text-sand-400 hover:text-sand-900 dark:hover:text-white text-xs font-medium transition-colors"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          id="btn-save-edit-cat"
+          class="flex-1 py-2.5 rounded-xl bg-accent hover:bg-accent-light text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+        >
+          <i class="fa-solid fa-floppy-disk text-xs"></i>
+          <span>Simpan</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabase-config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

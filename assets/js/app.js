@@ -8,7 +8,6 @@
   'use strict';
 
   // ─── CONFIG ───────────────────────────────────────────────────
-  const DATA_URL = './data.json';
   const WHATSAPP_NUMBER = '6281805230948';
   const WHATSAPP_MSG = encodeURIComponent(
     'Halo! Saya tertarik dengan jasa dokumentasi Anda. Bisa konsultasi lebih lanjut?'
@@ -116,6 +115,8 @@
       filter_photo: "Photos",
       filter_video: "Videos",
       sub_all: "All Photos",
+      sub_all_photos: "All Photos",
+      sub_all_videos: "All Videos",
       tag_bali: "Bali Ceremony",
       contact_eyebrow: "Contact",
       contact_title: "Book Now",
@@ -208,6 +209,8 @@
       filter_photo: "Foto",
       filter_video: "Video",
       sub_all: "Semua Foto",
+      sub_all_photos: "Semua Foto",
+      sub_all_videos: "Semua Video",
       tag_bali: "Upacara Bali",
       contact_eyebrow: "Kontak",
       contact_title: "Booking Sekarang",
@@ -236,14 +239,13 @@
   let activeGallerySubset = [];
   let nextGallerySubset = [];
   let isLightboxOpen = false;
-  let currentPhotoSubfilter = 'all';
+  let currentCategorySubfilter = 'all';
 
   // ─── DOM ──────────────────────────────────────────────────────
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
   const galleryGrid = $('#gallery-grid');
-  const galleryLoader = $('#gallery-loader');
   const navbar = $('#navbar');
   const mobileMenuBtn = $('#mobile-menu-btn');
   const mobileMenu = $('#mobile-menu');
@@ -335,6 +337,7 @@
 
   function refreshGallery() {
     if (!window.galleryData) return;
+    renderDynamicPhotoSubFilters();
     if (activeGallerySubset && activeGallerySubset.length > 0) {
       renderGalleryItems(activeGallerySubset);
     } else {
@@ -580,7 +583,8 @@
   // ─── GALLERY RENDER ───────────────────────────────────────────
 
   function getImageSrc(media) {
-    return media.startsWith('http') ? media : `assets/images/${media}`;
+    if (!media || typeof media !== 'string') return '';
+    return (media.startsWith('http') || media.startsWith('data:')) ? media : `assets/images/${media}`;
   }
 
   function skeletonCard(type = 'photo') {
@@ -593,11 +597,13 @@
     }
 
     const d = document.createElement('div');
-    d.className = 'rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm';
+    d.className = 'rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800';
     d.innerHTML = `
-      <div class="aspect-video bg-sand-200 dark:bg-sand-800/40 skeleton flex flex-col items-center justify-center text-sand-500/50 dark:text-sand-500/30 gap-2">
-        <i class="${iconClass} text-2xl"></i>
-        <span class="text-[10px] tracking-wider uppercase font-semibold">${label}</span>
+      <div class="aspect-video w-full bg-sand-200/80 dark:bg-sand-800/50 skeleton flex flex-col items-center justify-center p-3 sm:p-4 text-center select-none">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-sand-300/60 dark:bg-sand-700/50 flex items-center justify-center mb-1.5 sm:mb-2 transition-transform">
+          <i class="${iconClass} text-xs sm:text-sm text-sand-600 dark:text-sand-300"></i>
+        </div>
+        <span class="text-[9px] sm:text-[10px] tracking-wider uppercase font-medium text-sand-600/70 dark:text-sand-400/60">${label}</span>
       </div>
     `;
     return d;
@@ -619,14 +625,38 @@
     }
   }
 
+  function escapeHtml(str) {
+    if (!str || typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function sanitizeUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    const trimmed = url.trim();
+    if (/^(https?:\/\/|\/|data:image\/|\.\/)/i.test(trimmed)) {
+      return trimmed;
+    }
+    return '';
+  }
+
   function imageCard(item) {
-    const title = currentLang === 'en' ? item.judul_en : item.judul_id;
-    const thumbSrc = item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/');
+    const rawTitle = (currentLang === 'en' ? item.judul_en : item.judul_id) || 'ReasonVisual';
+    const title = escapeHtml(rawTitle);
+    const thumbSrc = item.thumb_media || (typeof item.sumber_media === 'string' && item.sumber_media.includes('gallery-photo/')
+      ? item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/')
+      : item.sumber_media);
+    const safeSrc = sanitizeUrl(getImageSrc(item.sumber_media));
+    const safeThumb = sanitizeUrl(getImageSrc(thumbSrc));
     return `
-      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="gambar" data-src="${getImageSrc(item.sumber_media)}" data-alt="${title}">
+      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="gambar" data-src="${safeSrc}" data-alt="${title}">
         <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
           <img
-            src="${getImageSrc(thumbSrc)}"
+            src="${safeThumb}"
             alt="${title}"
             loading="lazy"
             class="relative z-10 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:scale-105"
@@ -639,16 +669,16 @@
   }
 
   function getYouTubeId(url) {
-    if (!url) return null;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
+    if (!url || typeof url !== 'string') return null;
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    return match ? match[1] : null;
   }
 
   function videoCard(item) {
-    const title = currentLang === 'en' ? item.judul_en : item.judul_id;
-    const isYouTube = item.sumber_media.includes('youtube.com') || item.sumber_media.includes('youtu.be');
-    const isInstagram = item.sumber_media.includes('instagram.com');
+    const rawTitle = (currentLang === 'en' ? item.judul_en : item.judul_id) || 'ReasonVisual';
+    const title = escapeHtml(rawTitle);
+    const isYouTube = typeof item.sumber_media === 'string' && (item.sumber_media.includes('youtube.com') || item.sumber_media.includes('youtu.be'));
+    const isInstagram = typeof item.sumber_media === 'string' && item.sumber_media.includes('instagram.com');
 
     let badgeIcon = '<i class="fa-solid fa-play text-xs text-white"></i>';
     if (isYouTube) {
@@ -662,25 +692,61 @@
       const ytId = getYouTubeId(item.sumber_media);
       if (ytId) coverSrc = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
     }
-    if (!coverSrc) coverSrc = 'gallery-photo-thumb/DSC01482.JPG';
 
-    const cleanUrl = item.sumber_media.replace('/embed/', '/');
-    return `
-      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${cleanUrl}" data-alt="${title}">
-        <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
-          <img
-            src="${getImageSrc(coverSrc)}"
-            alt="${title}"
-            loading="lazy"
-            class="relative z-10 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:scale-105"
-            onload="this.style.opacity='1'; this.parentElement.classList.remove('skeleton');"
-            onerror="this.style.display='none';"
-          />
-          <!-- Play Overlay (Centered Play Icon with Smooth Diffused Shadow) -->
-          <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/15 group-hover:bg-black/30 transition-colors duration-300 pointer-events-none">
-            <i class="fa-solid fa-play text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] transform group-hover:scale-110 transition-transform duration-300 ml-0.5 sm:ml-1"></i>
+    const cleanUrl = typeof item.sumber_media === 'string' ? item.sumber_media.replace('/embed/', '/') : '';
+    const safeSrc = sanitizeUrl(cleanUrl);
+    const safeCoverSrc = sanitizeUrl(getImageSrc(coverSrc));
+
+    if (coverSrc) {
+      return `
+        <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${safeSrc}" data-alt="${title}">
+          <div class="relative aspect-video bg-sand-200 dark:bg-sand-800 skeleton overflow-hidden group">
+            <img
+              src="${safeCoverSrc}"
+              alt="${title}"
+              loading="lazy"
+              class="relative z-10 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:scale-105"
+              onload="this.style.opacity='1'; this.parentElement.classList.remove('skeleton');"
+              onerror="this.style.display='none';"
+            />
+            <!-- Play Overlay (Centered Play Icon with Smooth Diffused Shadow) -->
+            <div class="absolute inset-0 z-20 flex items-center justify-center bg-black/15 group-hover:bg-black/30 transition-colors duration-300 pointer-events-none">
+              <i class="fa-solid fa-play text-2xl sm:text-3xl md:text-4xl text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] transform group-hover:scale-110 transition-transform duration-300 ml-0.5 sm:ml-1"></i>
+            </div>
+            <!-- Platform Badge (White Icon) -->
+            <div class="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
+              ${badgeIcon}
+            </div>
           </div>
-          <!-- Platform Badge (White Icon) -->
+        </div>
+      `;
+    }
+
+    if (isInstagram) {
+      return `
+        <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${safeSrc}" data-alt="${title}">
+          <div class="relative aspect-video bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#405DE6] overflow-hidden group flex flex-col items-center justify-center text-white">
+            <div class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/15 group-hover:bg-black/30 transition-colors duration-300 pointer-events-none">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center mb-1.5 transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                <i class="fa-brands fa-instagram text-2xl sm:text-3xl text-white"></i>
+              </div>
+              <span class="text-[11px] sm:text-xs font-semibold tracking-wider uppercase text-white/90 drop-shadow">Instagram Reel</span>
+            </div>
+            <div class="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
+              ${badgeIcon}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="gallery-card rounded-xl overflow-hidden bg-white dark:bg-[#1F1F1F] border border-sand-200 dark:border-sand-800 shadow-sm cursor-pointer" data-type="video" data-src="${safeSrc}" data-alt="${title}">
+        <div class="relative aspect-video bg-sand-900 overflow-hidden group flex flex-col items-center justify-center text-white">
+          <div class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors duration-300 pointer-events-none">
+            <i class="fa-solid fa-play text-2xl sm:text-3xl text-white drop-shadow mb-1.5 transform group-hover:scale-110 transition-transform duration-300"></i>
+            <span class="text-[11px] sm:text-xs font-medium text-sand-300">Tonton Video</span>
+          </div>
           <div class="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/60 backdrop-blur-md text-white border border-white/20 flex items-center justify-center shadow-sm">
             ${badgeIcon}
           </div>
@@ -721,7 +787,9 @@
     items.forEach((item) => {
       if (item.tipe_media === 'gambar') {
         const img = new Image();
-        const thumbSrc = item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/');
+        const thumbSrc = item.thumb_media || (typeof item.sumber_media === 'string' && item.sumber_media.includes('gallery-photo/')
+          ? item.sumber_media.replace('gallery-photo/', 'gallery-photo-thumb/')
+          : item.sumber_media);
         img.src = getImageSrc(thumbSrc);
       }
     });
@@ -733,16 +801,54 @@
       return window.galleryData;
     }
     let data = window.galleryData.filter((item) => item.tipe_media === filterVal);
-    if (filterVal === 'gambar' && currentPhotoSubfilter !== 'all') {
-      data = data.filter((item) => item.kategori === currentPhotoSubfilter);
+    if (currentCategorySubfilter !== 'all') {
+      data = data.filter((item) => item.kategori === currentCategorySubfilter);
     }
     return data;
+  }
+
+  function refreshGallery() {
+    if (!galleryGrid) return;
+    const activeBtn = $('.gallery-filter-btn.bg-accent');
+    const filterVal = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+    if (filterVal === 'gambar' || filterVal === 'video') {
+      renderDynamicSubFilters(filterVal);
+    } else {
+      hideSubFilters();
+    }
+    startGalleryRotation(filterVal);
+  }
+
+  function renderEmptyDatabaseState() {
+    if (!galleryGrid) return;
+    const isEn = currentLang === 'en';
+    const title = isEn ? 'No media found in this section.' : 'Belum ada media yang ditampilkan.';
+    const desc = isEn
+      ? 'There are currently no photos or videos available in this section.'
+      : 'Saat ini belum ada foto atau video yang tersedia untuk ditampilkan.';
+
+    galleryGrid.innerHTML = `
+      <div class="col-span-full py-16 sm:py-20 px-4 text-center rounded-2xl bg-sand-100/50 dark:bg-white/[0.02] border border-dashed border-sand-300 dark:border-white/10 flex flex-col items-center justify-center">
+        <div class="w-14 h-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center text-xl mx-auto mb-3 shadow-xs">
+          <i class="fa-solid fa-photo-film"></i>
+        </div>
+        <h4 class="text-sm sm:text-base font-semibold text-sand-800 dark:text-sand-200">${title}</h4>
+        <p class="text-xs text-sand-500 dark:text-sand-400 max-w-sm mt-1.5 leading-relaxed">
+          ${desc}
+        </p>
+      </div>
+    `;
   }
 
   function startGalleryRotation(filterVal) {
     if (galleryRotationInterval) {
       clearInterval(galleryRotationInterval);
       galleryRotationInterval = null;
+    }
+
+    if (window.isSupabaseConnected && (!window.galleryData || window.galleryData.length === 0)) {
+      renderEmptyDatabaseState();
+      return;
     }
 
     if (!window.galleryData || window.galleryData.length === 0) {
@@ -753,7 +859,43 @@
     const filtered = getFilteredGalleryData(filterVal);
 
     if (filtered.length === 0) {
-      renderEmptyPlaceholders(filterVal);
+      const isVideo = filterVal === 'video';
+      const catLabel = currentCategorySubfilter !== 'all' ? formatCategoryName(currentCategorySubfilter) : '';
+      
+      let emptyMsg = '';
+      let hintMsg = '';
+
+      if (currentLang === 'en') {
+        if (catLabel) {
+          emptyMsg = isVideo ? `No videos in "${catLabel}" category yet.` : `No photos in "${catLabel}" category yet.`;
+        } else {
+          emptyMsg = isVideo ? 'No videos found in this section.' : 'No media found in this section.';
+        }
+        hintMsg = isVideo
+          ? 'Try selecting another category or view "All Videos".'
+          : 'Try selecting another category or view "All Photos".';
+      } else {
+        if (catLabel) {
+          emptyMsg = isVideo ? `Belum ada video untuk kategori "${catLabel}".` : `Belum ada foto untuk kategori "${catLabel}".`;
+        } else {
+          emptyMsg = isVideo ? 'Belum ada video di bagian ini.' : 'Belum ada media yang ditampilkan.';
+        }
+        hintMsg = isVideo
+          ? 'Silakan pilih kategori lainnya atau lihat "Semua Video".'
+          : 'Silakan pilih kategori lainnya atau lihat "Semua Foto".';
+      }
+
+      const iconClass = isVideo ? 'fa-solid fa-video' : 'fa-solid fa-camera';
+
+      galleryGrid.innerHTML = `
+        <div class="col-span-full py-16 sm:py-20 px-4 text-center rounded-2xl bg-sand-100/50 dark:bg-white/[0.02] border border-dashed border-sand-300 dark:border-white/10 flex flex-col items-center justify-center">
+          <div class="w-14 h-14 rounded-2xl bg-accent/10 text-accent flex items-center justify-center text-xl mx-auto mb-3 shadow-xs">
+            <i class="${iconClass}"></i>
+          </div>
+          <h4 class="text-sm sm:text-base font-semibold text-sand-800 dark:text-sand-200">${emptyMsg}</h4>
+          <p class="text-xs text-sand-500 dark:text-sand-400 max-w-sm mt-1.5 leading-relaxed">${hintMsg}</p>
+        </div>
+      `;
       return;
     }
 
@@ -937,26 +1079,149 @@
     });
   }
 
-  function showPhotoSubFilters() {
-    const photoSubFilters = $('#photo-sub-filters');
-    if (!photoSubFilters) return;
-    photoSubFilters.classList.add('sub-filters-open');
+  function hideSubFilters() {
+    const subFilters = $('#photo-sub-filters');
+    if (!subFilters) return;
+    subFilters.classList.remove('sub-filters-open');
+    currentCategorySubfilter = 'all';
   }
 
-  function hidePhotoSubFilters() {
-    const photoSubFilters = $('#photo-sub-filters');
-    if (!photoSubFilters) return;
-    photoSubFilters.classList.remove('sub-filters-open');
-    
-    currentPhotoSubfilter = 'all';
-    const subBtns = $$('.photo-sub-filter-btn');
-    subBtns.forEach((btn) => {
-      const subVal = btn.getAttribute('data-subfilter');
-      if (subVal === 'all') {
-        btn.className = "photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-accent text-white shadow-sm";
-      } else {
-        btn.className = "photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700";
+  let dynamicCategoriesList = null;
+  let dynamicCategoryNameMap = {};
+
+  async function fetchCategoriesFromDb() {
+    if (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.URL && window.SUPABASE_CONFIG.ANON_KEY) {
+      try {
+        const url = `${window.SUPABASE_CONFIG.URL}/rest/v1/categories?select=*&order=urutan.asc,id.asc`;
+        const res = await fetch(url, {
+          headers: {
+            'apikey': window.SUPABASE_CONFIG.ANON_KEY,
+            'Authorization': `Bearer ${window.SUPABASE_CONFIG.ANON_KEY}`
+          }
+        });
+        if (res.ok) {
+          const cats = await res.json();
+          if (Array.isArray(cats) && cats.length > 0) {
+            dynamicCategoriesList = cats.map((c) => c.slug);
+            dynamicCategoryNameMap = {};
+            cats.forEach((c) => {
+              dynamicCategoryNameMap[c.slug] = c.name;
+            });
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Gagal membaca tabel categories:', err);
       }
+    }
+  }
+
+  function formatCategoryName(slug) {
+    if (!slug) return '';
+    if (dynamicCategoryNameMap && dynamicCategoryNameMap[slug]) {
+      return dynamicCategoryNameMap[slug];
+    }
+    const key = `tag_${slug}`;
+    if (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) {
+      return TRANSLATIONS[currentLang][key];
+    }
+    return slug
+      .split(/[_-]/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  /**
+   * Mengambil daftar kategori yang HANYA memiliki media aktif di database
+   * @param {'gambar'|'video'} mediaType
+   * @returns {string[]}
+   */
+  function getCategoriesWithMedia(mediaType) {
+    if (!window.galleryData || !Array.isArray(window.galleryData)) return [];
+
+    const catsWithMedia = new Set();
+    window.galleryData.forEach((item) => {
+      if (item.tipe_media === mediaType && item.kategori) {
+        catsWithMedia.add(item.kategori);
+      }
+    });
+
+    if (dynamicCategoriesList && dynamicCategoriesList.length > 0) {
+      const sorted = dynamicCategoriesList.filter((cat) => catsWithMedia.has(cat));
+      catsWithMedia.forEach((cat) => {
+        if (!sorted.includes(cat)) sorted.push(cat);
+      });
+      return sorted;
+    }
+
+    return Array.from(catsWithMedia);
+  }
+
+  /**
+   * Render sub-filter kategori secara dinamis untuk Foto maupun Video
+   * Hanya menampilkan kategori yang memiliki isi media (tidak kosong)
+   * @param {'gambar'|'video'} mediaType
+   */
+  function renderDynamicSubFilters(mediaType) {
+    const subFilters = $('#photo-sub-filters');
+    if (!subFilters) return;
+
+    const availableCats = getCategoriesWithMedia(mediaType);
+
+    // Jika tidak ada kategori yang memiliki media pada tipe ini, sembunyikan subfilter
+    if (availableCats.length === 0) {
+      subFilters.innerHTML = '';
+      subFilters.classList.remove('sub-filters-open');
+      return;
+    }
+
+    subFilters.classList.add('sub-filters-open');
+
+    const isVideo = mediaType === 'video';
+    const allLabel = isVideo
+      ? (TRANSLATIONS[currentLang]?.sub_all_videos || (currentLang === 'en' ? 'All Videos' : 'Semua Video'))
+      : (TRANSLATIONS[currentLang]?.sub_all_photos || (currentLang === 'en' ? 'All Photos' : 'Semua Foto'));
+
+    // Validasi apakah kategori yang aktif masih tersedia di daftar kategori berisi media
+    if (currentCategorySubfilter !== 'all' && !availableCats.includes(currentCategorySubfilter)) {
+      currentCategorySubfilter = 'all';
+    }
+
+    let html = `
+      <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all ${currentCategorySubfilter === 'all' ? 'bg-accent text-white' : 'bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700'}" data-subfilter="all">
+        ${allLabel}
+      </button>
+    `;
+
+    availableCats.forEach((cat) => {
+      const active = currentCategorySubfilter === cat;
+      const label = formatCategoryName(cat);
+      html += `
+        <button class="photo-sub-filter-btn px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all ${active ? 'bg-accent text-white' : 'bg-sand-200 dark:bg-sand-800 text-sand-700 dark:text-sand-300 hover:bg-sand-300 dark:hover:bg-sand-700'}" data-subfilter="${cat}">
+          ${label}
+        </button>
+      `;
+    });
+
+    subFilters.innerHTML = html;
+
+    // Pasang event listener untuk tombol-tombol subfilter
+    const subBtns = subFilters.querySelectorAll('.photo-sub-filter-btn');
+    subBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const subVal = btn.getAttribute('data-subfilter');
+        currentCategorySubfilter = subVal;
+
+        subBtns.forEach((b) => {
+          b.classList.remove('bg-accent', 'text-white', 'shadow-sm');
+          b.classList.add('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
+        });
+
+        btn.classList.add('bg-accent', 'text-white');
+        btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700', 'shadow-sm');
+
+        startGalleryRotation(mediaType);
+      });
     });
   }
 
@@ -974,67 +1239,99 @@
           b.classList.add('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
         });
 
-        btn.classList.add('bg-accent', 'text-white', 'shadow-md', 'shadow-accent/15');
-        btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
+        btn.classList.add('bg-accent', 'text-white');
+        btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700', 'shadow-md', 'shadow-accent/15');
+
+        // Reset subfilter category when switching top filter tab
+        currentCategorySubfilter = 'all';
 
         if (filterVal === 'gambar') {
-          showPhotoSubFilters();
+          renderDynamicSubFilters('gambar');
+        } else if (filterVal === 'video') {
+          renderDynamicSubFilters('video');
         } else {
-          hidePhotoSubFilters();
+          hideSubFilters();
         }
 
         startGalleryRotation(filterVal);
       });
     });
-
-    const subBtns = $$('.photo-sub-filter-btn');
-    subBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const subVal = btn.getAttribute('data-subfilter');
-        currentPhotoSubfilter = subVal;
-
-        // Update active classes on subfilter buttons
-        subBtns.forEach((b) => {
-          b.classList.remove('bg-accent', 'text-white', 'shadow-sm');
-          b.classList.add('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
-        });
-
-        btn.classList.add('bg-accent', 'text-white', 'shadow-sm');
-        btn.classList.remove('bg-sand-200', 'dark:bg-sand-800', 'text-sand-700', 'dark:text-sand-300', 'hover:bg-sand-300', 'dark:hover:bg-sand-700');
-
-        startGalleryRotation('gambar');
-      });
-    });
   }
 
   async function loadGallery() {
-    if (galleryLoader) {
-      galleryLoader.innerHTML = '';
-      for (let i = 0; i < 4; i++) {
-        const type = i % 2 === 0 ? 'photo' : 'video';
-        galleryLoader.appendChild(skeletonCard(type));
-      }
-    }
+    // Tampilkan 4 skeleton placeholder yang proporsional langsung di dalam galleryGrid
+    renderEmptyPlaceholders('all');
 
     try {
-      const res = await fetch(DATA_URL);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      let data = null;
 
-      await new Promise((r) => setTimeout(r, 400));
-      if (galleryLoader) galleryLoader.style.display = 'none';
+      // Ambil master kategori dari tabel categories di Supabase
+      await fetchCategoriesFromDb();
+
+      // 1. Coba ambil dari Supabase jika koneksi & config aktif
+      if (window.SUPABASE_CONFIG && window.SUPABASE_CONFIG.URL && window.SUPABASE_CONFIG.ANON_KEY) {
+        try {
+          // A. Coba menggunakan Supabase JS client jika tersedia
+          if (window.supabaseClient) {
+            const { data: supaData, error: supaErr } = await window.supabaseClient
+              .from('gallery')
+              .select('*')
+              .order('created_at', { ascending: false });
+
+            if (!supaErr && Array.isArray(supaData)) {
+              data = supaData;
+              window.isSupabaseConnected = true;
+              console.log(`✨ Galeri terhubung ke Supabase Client (${data.length} item).`);
+            } else if (supaErr) {
+              console.warn('⚠️ Supabase client query warning:', supaErr.message);
+            }
+          }
+
+          // B. Native REST API fetch (sangat cepat & tanpa ketergantungan library CDN)
+          if (data === null) {
+            const url = `${window.SUPABASE_CONFIG.URL}/rest/v1/gallery?select=*&order=created_at.desc`;
+            const res = await fetch(url, {
+              headers: {
+                'apikey': window.SUPABASE_CONFIG.ANON_KEY,
+                'Authorization': `Bearer ${window.SUPABASE_CONFIG.ANON_KEY}`
+              }
+            });
+
+            if (res.ok) {
+              const supaData = await res.json();
+              if (Array.isArray(supaData)) {
+                data = supaData;
+                window.isSupabaseConnected = true;
+                console.log(`✨ Galeri terhubung ke Supabase REST API (${data.length} item).`);
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('⚠️ Koneksi Supabase gagal:', err);
+        }
+      }
+
+      // 2. Default jika data kosong atau koneksi Supabase belum ada data
+      if (!Array.isArray(data)) {
+        data = [];
+      }
+
+      await new Promise((r) => setTimeout(r, 250));
 
       if (galleryGrid) {
         window.galleryData = data;
         setupGalleryFilters();
-        startGalleryRotation('all');
+        if (data.length > 0) {
+          startGalleryRotation('all');
+        } else {
+          renderEmptyPlaceholders('all');
+        }
       }
     } catch (err) {
       console.error('Gallery load error:', err);
       if (galleryGrid) {
         renderEmptyPlaceholders('all');
       }
-      if (galleryLoader) galleryLoader.style.display = 'none';
     }
   }
 
